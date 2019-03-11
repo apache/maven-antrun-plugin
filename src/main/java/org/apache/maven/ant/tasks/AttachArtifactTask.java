@@ -63,6 +63,7 @@ public class AttachArtifactTask
     private String type;
 
     /** {@inheritDoc} */
+    @Override
     public void execute()
     {
         if ( file == null )

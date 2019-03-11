@@ -20,7 +20,6 @@ package org.apache.maven.ant.tasks.support;
  */
 
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.DefaultArtifact;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
 
 /**
@@ -53,23 +52,23 @@ public class SpecificScopesArtifactFilter
 
         for ( String aScopeList : scopeList )
         {
-            if ( aScopeList.trim().equals( DefaultArtifact.SCOPE_COMPILE ) )
+            if ( aScopeList.trim().equals( Artifact.SCOPE_COMPILE ) )
             {
                 compileScope = true;
             }
-            else if ( aScopeList.trim().equals( DefaultArtifact.SCOPE_PROVIDED ) )
+            else if ( aScopeList.trim().equals( Artifact.SCOPE_PROVIDED ) )
             {
                 providedScope = true;
             }
-            else if ( aScopeList.trim().equals( DefaultArtifact.SCOPE_RUNTIME ) )
+            else if ( aScopeList.trim().equals( Artifact.SCOPE_RUNTIME ) )
             {
                 runtimeScope = true;
             }
-            else if ( aScopeList.trim().equals( DefaultArtifact.SCOPE_SYSTEM ) )
+            else if ( aScopeList.trim().equals( Artifact.SCOPE_SYSTEM ) )
             {
                 systemScope = true;
             }
-            else if ( aScopeList.trim().equals( DefaultArtifact.SCOPE_TEST ) )
+            else if ( aScopeList.trim().equals( Artifact.SCOPE_TEST ) )
             {
                 testScope = true;
             }
@@ -77,6 +76,7 @@ public class SpecificScopesArtifactFilter
     }
 
     /** {@inheritDoc} */
+    @Override
     public boolean include( Artifact artifact )
     {
         if ( Artifact.SCOPE_COMPILE.equals( artifact.getScope() ) )

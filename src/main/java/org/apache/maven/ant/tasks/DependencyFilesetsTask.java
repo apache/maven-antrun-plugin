@@ -99,6 +99,7 @@ public class DependencyFilesetsTask
     }
 
     /** {@inheritDoc} */
+    @Override
     public void execute()
     {
         if ( this.getProject().getReference( mavenProjectId ) == null )
@@ -241,7 +242,7 @@ public class DependencyFilesetsTask
             filter.add( new TypesArtifactFilter( getTypes() ) );
         }
 
-        Set<Artifact> artifactsResult = new LinkedHashSet<Artifact>();
+        Set<Artifact> artifactsResult = new LinkedHashSet<>();
         for ( Artifact artifact : artifacts )
         {
             if ( filter.include( artifact ) )

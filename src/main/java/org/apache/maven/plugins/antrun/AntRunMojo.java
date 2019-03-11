@@ -50,7 +50,6 @@ import org.apache.tools.ant.ProjectHelper;
 import org.apache.tools.ant.taskdefs.Typedef;
 import org.apache.tools.ant.types.Path;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
-import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
 
@@ -393,7 +392,7 @@ public class AntRunMojo
             return new Path( antProject );
         }
 
-        List<String> list = new ArrayList<String>( artifacts.size() );
+        List<String> list = new ArrayList<>( artifacts.size() );
         for ( Artifact a : artifacts )
         {
             File file = a.getFile();
@@ -557,11 +556,8 @@ public class AntRunMojo
             return null;
         }
 
-        LineNumberReader reader = null;
-        try
+        try ( LineNumberReader reader = new LineNumberReader( ReaderFactory.newXmlReader( antFile ) ) )
         {
-            reader = new LineNumberReader( ReaderFactory.newXmlReader( antFile ) );
-
             for ( String line = reader.readLine(); line != null; line = reader.readLine() )
             {
                 if ( reader.getLineNumber() == buildException.getLocation().getLineNumber() )
@@ -571,18 +567,10 @@ public class AntRunMojo
 
                 }
             }
-
-            reader.close();
-            reader = null;
         }
         catch ( Exception e )
         {
             getLog().debug( e.getMessage(), e );
-            return null;
-        }
-        finally
-        {
-            IOUtil.close( reader );
         }
 
         return null;

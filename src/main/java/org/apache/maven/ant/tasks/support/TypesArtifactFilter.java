@@ -31,7 +31,7 @@ import java.util.List;
 public class TypesArtifactFilter
     implements ArtifactFilter
 {
-    private List<String> types = new ArrayList<String>();
+    private List<String> types = new ArrayList<>();
 
     /**
      * Accepts a comma separated list of types
@@ -50,6 +50,7 @@ public class TypesArtifactFilter
     }
 
     /** {@inheritDoc} */
+    @Override
     public boolean include( Artifact artifact )
     {
         String artifactType = artifact.getType();

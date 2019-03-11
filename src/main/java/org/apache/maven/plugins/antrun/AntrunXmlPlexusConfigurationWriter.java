@@ -20,7 +20,6 @@ package org.apache.maven.plugins.antrun;
  */
 
 import org.codehaus.plexus.configuration.PlexusConfiguration;
-import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.xml.Xpp3DomUtils;
 import org.codehaus.plexus.util.xml.pull.MXSerializer;
 import org.codehaus.plexus.util.xml.pull.XmlSerializer;
@@ -40,7 +39,7 @@ class AntrunXmlPlexusConfigurationWriter
 {
 
     private static final Set<String> EXCLUDED_ATTRIBUTES =
-        new HashSet<String>( Arrays.asList( Xpp3DomUtils.CHILDREN_COMBINATION_MODE_ATTRIBUTE,
+        new HashSet<>( Arrays.asList( Xpp3DomUtils.CHILDREN_COMBINATION_MODE_ATTRIBUTE,
                                             Xpp3DomUtils.SELF_COMBINATION_MODE_ATTRIBUTE ) );
 
     /**
@@ -57,8 +56,7 @@ class AntrunXmlPlexusConfigurationWriter
         serializer.setProperty( "http://xmlpull.org/v1/doc/properties.html#serializer-line-separator",
                                 System.getProperty( "line.separator" ) );
         serializer.setProperty( "http://xmlpull.org/v1/doc/properties.html#serializer-indentation", "  " );
-        BufferedOutputStream bos = new BufferedOutputStream( new FileOutputStream( file ) );
-        try
+        try ( BufferedOutputStream bos = new BufferedOutputStream( new FileOutputStream( file ) ) )
         {
             serializer.setOutput( bos, AntRunMojo.UTF_8 );
             serializer.startDocument( AntRunMojo.UTF_8, null );
@@ -72,10 +70,6 @@ class AntrunXmlPlexusConfigurationWriter
             write( configuration, serializer );
             serializer.endTag( null, "project" );
             serializer.endDocument();
-        }
-        finally
-        {
-            IOUtil.close( bos );
         }
     }
 

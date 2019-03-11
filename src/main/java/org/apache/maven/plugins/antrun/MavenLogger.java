@@ -39,6 +39,7 @@ public class MavenLogger
         this.log = log;
     }
 
+    @Override
     protected void printMessage( final String message, final PrintStream stream, final int priority )
     {
         switch ( priority )
