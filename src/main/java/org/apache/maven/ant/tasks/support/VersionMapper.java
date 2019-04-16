@@ -31,7 +31,6 @@ import java.util.List;
  * Ant filename mapper to remove version info from filename when copying dependencies.
  *
  * @author <a href="mailto:hboutemy@apache.org">Herve Boutemy</a>
- * @version $Id$
  */
 public class VersionMapper
     implements FileNameMapper, Comparator<String>

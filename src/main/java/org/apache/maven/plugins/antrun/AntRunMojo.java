@@ -63,7 +63,6 @@ import org.codehaus.plexus.util.StringUtils;
  *
  * @author <a href="mailto:kenney@apache.org">Kenney Westerhof</a>
  * @author <a href="mailto:vincent.siveton@gmail.com">Vincent Siveton</a>
- * @version $Id$
  */
 @Mojo( name = "run", threadSafe = true, requiresDependencyResolution = ResolutionScope.TEST )
 public class AntRunMojo

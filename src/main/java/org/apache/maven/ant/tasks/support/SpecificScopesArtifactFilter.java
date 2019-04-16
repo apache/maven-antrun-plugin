@@ -26,7 +26,6 @@ import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
  * Filter to only retain objects in the given scope(s).
  *
  * @author pgier
- * @version $Id$
  */
 public class SpecificScopesArtifactFilter
     implements ArtifactFilter
