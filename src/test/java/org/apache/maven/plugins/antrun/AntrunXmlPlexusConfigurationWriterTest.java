@@ -19,22 +19,19 @@ package org.apache.maven.plugins.antrun;
  * under the License.
  */
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 import org.codehaus.plexus.configuration.xml.XmlPlexusConfiguration;
-import org.codehaus.plexus.util.IOUtil;
-import org.custommonkey.xmlunit.XMLAssert;
-import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.xmlunit.builder.Input;
+
+import static org.junit.Assert.assertThat;
+import static org.xmlunit.matchers.CompareMatcher.isIdenticalTo;
 
 /**
  * Test class for {@link AntrunXmlPlexusConfigurationWriter}.
@@ -127,21 +124,8 @@ public class AntrunXmlPlexusConfigurationWriterTest
     }
 
     private void assertXmlIsExpected( String expected, File file )
-        throws Exception
     {
-        Charset charset = Charset.forName( "UTF-8" );
-        BufferedReader test = new BufferedReader( new InputStreamReader( new FileInputStream( file ), charset ) );
-        BufferedReader control =
-            new BufferedReader( new InputStreamReader( getClass().getResourceAsStream( expected ), charset ) );
-        try
-        {
-            XMLAssert.assertXMLEqual( XMLUnit.compareXML( control, test ), true );
-        }
-        finally
-        {
-            IOUtil.close( test );
-            IOUtil.close( control );
-        }
+        assertThat( Input.from( file ), isIdenticalTo( Input.from( getClass().getResourceAsStream( expected ) ) ) );
     }
 
     @Rule
