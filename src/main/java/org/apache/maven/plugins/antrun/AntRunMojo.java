@@ -418,7 +418,9 @@ public class AntRunMojo
     {
         Properties mavenProps = mavenProject.getProperties();
         Properties userProps = session.getUserProperties();
-        for ( String key : mavenProps.stringPropertyNames() )
+        List<String> allPropertyKeys = new ArrayList<String>( mavenProps.stringPropertyNames() );
+        allPropertyKeys.addAll( userProps.stringPropertyNames() );
+        for ( String key : allPropertyKeys )
         {
             String value = userProps.getProperty( key, mavenProps.getProperty( key ) );
             antProject.setProperty( key, value );
