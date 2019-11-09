@@ -127,6 +127,7 @@ under the License.
           <configuration>
             <excludes combine.children="append">
               <exclude>src/test/resources/configuration-writer/*.xml</exclude>
+              <exclude>src/it/*/*.json</exclude>
             </excludes>
           </configuration>
         </plugin>
