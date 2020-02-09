@@ -45,6 +45,7 @@ public class AttachArtifactTask
     /**
      * The refId of the Maven project helper component.
      */
+    @SuppressWarnings( "FieldCanBeLocal" )
     private String mavenProjectHelperRefId = AntRunMojo.DEFAULT_MAVEN_PROJECT_HELPER_REFID;
 
     /**
@@ -95,7 +96,7 @@ public class AttachArtifactTask
         }
 
         log( "Attaching " + file + " as an attached artifact", Project.MSG_VERBOSE );
-        MavenProjectHelper projectHelper = (MavenProjectHelper) getProject().getReference( mavenProjectHelperRefId );
+        MavenProjectHelper projectHelper = getProject().getReference( mavenProjectHelperRefId );
         projectHelper.attachArtifact( mavenProject, type, classifier, file );
     }
 

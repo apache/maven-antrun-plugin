@@ -107,14 +107,14 @@ public class DependencyFilesetsTask
             throw new BuildException( "Maven project reference not found: " + mavenProjectId );
         }
 
-        MavenProject mavenProject = (MavenProject) this.getProject().getReference( "maven.project" );
+        MavenProject mavenProject = this.getProject().getReference( "maven.project" );
 
         // Add filesets for depenedency artifacts
         Set<Artifact> depArtifacts = filterArtifacts( mavenProject.getArtifacts() );
 
         FileSet dependenciesFileSet = new FileSet();
         dependenciesFileSet.setProject( getProject() );
-        ArtifactRepository localRepository = (ArtifactRepository) getProject().getReference( "maven.local.repository" );
+        ArtifactRepository localRepository = getProject().getReference( "maven.local.repository" );
         dependenciesFileSet.setDir( new File( localRepository.getBasedir() ) );
 
         if ( depArtifacts.isEmpty() )

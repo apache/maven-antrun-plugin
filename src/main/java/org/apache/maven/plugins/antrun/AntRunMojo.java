@@ -196,6 +196,7 @@ public class AntRunMojo
      * @deprecated Use the <code>build-helper-maven-plugin</code> to bind source directories. For version 3.0.0, this
      *             parameter is only defined to break the build if you use it!
      */
+    @SuppressWarnings( "DeprecatedIsStillUsed" )
     @Deprecated
     @Parameter( property = "sourceRoot" )
     private File sourceRoot;
@@ -207,6 +208,7 @@ public class AntRunMojo
      * @deprecated Use the <code>build-helper-maven-plugin</code> to bind test source directories. For version 3.0.0,
      *             this parameter is only defined to break the build if you use it!
      */
+    @SuppressWarnings( "DeprecatedIsStillUsed" )
     @Deprecated
     @Parameter( property = "testSourceRoot" )
     private File testSourceRoot;
@@ -418,7 +420,7 @@ public class AntRunMojo
     {
         Properties mavenProps = mavenProject.getProperties();
         Properties userProps = session.getUserProperties();
-        List<String> allPropertyKeys = new ArrayList<String>( mavenProps.stringPropertyNames() );
+        List<String> allPropertyKeys = new ArrayList<>( mavenProps.stringPropertyNames() );
         allPropertyKeys.addAll( userProps.stringPropertyNames() );
         for ( String key : allPropertyKeys )
         {
@@ -522,7 +524,7 @@ public class AntRunMojo
     /**
      * Write the Ant target and surrounding tags to a temporary file
      *
-     * @throws IOException
+     * @throws IOException problem with write to file
      */
     private File writeTargetToProjectFile( String targetName )
         throws IOException

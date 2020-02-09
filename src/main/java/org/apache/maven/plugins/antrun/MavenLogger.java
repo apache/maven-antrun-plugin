@@ -50,13 +50,11 @@ public class MavenLogger
             case Project.MSG_WARN:
                 log.warn( message );
                 break;
-            case Project.MSG_INFO:
-                log.info( message );
-                break;
             case Project.MSG_DEBUG:
             case Project.MSG_VERBOSE:
                 log.debug( message );
                 break;
+            case Project.MSG_INFO:
             default:
                 log.info( message );
                 break;
