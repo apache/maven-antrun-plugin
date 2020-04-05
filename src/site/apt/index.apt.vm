@@ -24,7 +24,7 @@
  ~~ under the License.
 
  ~~ NOTE: For help with the syntax of this file, see:
- ~~ http://maven.apache.org/doxia/references/apt-format.html
+ ~~ https://maven.apache.org/doxia/references/apt-format.html
 
 ${project.name}
 
@@ -34,7 +34,7 @@ ${project.name}
   It is <not> the intention of this plugin to provide a means of polluting the
   POM, so it's encouraged to move all your Ant tasks to a <<<build.xml>>> file
   and just call it from the POM using Ant's
-  {{{http://ant.apache.org/manual/Tasks/ant.html}\<ant/\> task}}.
+  {{{https://ant.apache.org/manual/Tasks/ant.html}\<ant/\> task}}.
 
   One of the main purposes of this plugin is to facilitate the migration from Ant
   based projects to Maven. Some projects may not currently be able to migrate
@@ -52,9 +52,9 @@ ${project.name}
    * <<<tasks>>>: use <<<target>>> instead;
 
    * <<<sourceRoot>>> and <<<testSourceRoot>>>: you can use the 
-   {{{http://www.mojohaus.org/build-helper-maven-plugin/}build-helper-maven-plugin}} instead, with its 
-   {{{http://www.mojohaus.org/build-helper-maven-plugin/add-source-mojo.html}add-source}} and 
-   {{{http://www.mojohaus.org/build-helper-maven-plugin/add-test-source-mojo.html}add-test-source}} goals.
+   {{{https://www.mojohaus.org/build-helper-maven-plugin/}build-helper-maven-plugin}} instead, with its 
+   {{{https://www.mojohaus.org/build-helper-maven-plugin/add-source-mojo.html}add-source}} and 
+   {{{https://www.mojohaus.org/build-helper-maven-plugin/add-test-source-mojo.html}add-test-source}} goals.
 
   The format <<<maven.dependency.groupId.artifactId[.classifier].type.path>>> to reference the path of a project
   dependency as an Ant property has been removed: use <<<groupId:artifactId:type[:classifier]>>> instead.
@@ -75,7 +75,7 @@ ${project.name}
   entire debug logs, POMs or most preferably little demo projects attached to the issue are very much appreciated.
   Of course, patches are welcome, too. Contributors can check out the project from our
   {{{./source-repository.html}source repository}} and will find supplementary information in the
-  {{{http://maven.apache.org/guides/development/guide-helping.html}guide to helping with Maven}}.
+  {{{https://maven.apache.org/guides/development/guide-helping.html}guide to helping with Maven}}.
 
 * Examples
 
