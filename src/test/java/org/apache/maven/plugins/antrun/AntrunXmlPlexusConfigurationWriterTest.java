@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.xmlunit.builder.Input;
 
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.xmlunit.matchers.CompareMatcher.isIdenticalTo;
 
 /**
