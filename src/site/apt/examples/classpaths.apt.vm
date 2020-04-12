@@ -24,7 +24,7 @@
  ~~ under the License.
 
  ~~ NOTE: For help with the syntax of this file, see:
- ~~ http://maven.apache.org/doxia/references/apt-format.html
+ ~~ https://maven.apache.org/doxia/references/apt-format.html
 
 Referencing the Maven Classpaths
 
@@ -32,18 +32,18 @@ Referencing the Maven Classpaths
  <<groupId:artifactId:type[:classifier]>>.  For example, to show the path to a 
  jar dependency with groupId "org.apache" and artifactId "common-util", the following could be used.
 
-------
++---+
 #set( $D = '$' )
 <echo message="${D}{org.apache:common-util:jar}"/> 
-------
- 
++---+
+
  If the dependency includes a classifier, the classifier is appended to the property name.
  For example, groupId "org.apache", artifactId "common-util", type "jar", and classifier "jdk14".
  
-------
++---+
 #set( $D = '$' )
 <echo message="${D}{org.apache:common-util:jar:jdk14}"/> 
-------
++---+
  
  <<Note:>> the old format "maven.dependency.groupId.artifactId[.classifier].type.path" is not supported as of version 
  3.0.0 of the plugin.
@@ -61,7 +61,7 @@ Referencing the Maven Classpaths
 
  For example, to display Maven's classpaths using antrun, we can do this
 
-------
++---+
 <project>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>my-test-app</artifactId>
@@ -102,11 +102,11 @@ Referencing the Maven Classpaths
   </build>
 </project>
 
-------
++---+
 
  or alternatively, we can use an external <<<build.xml>>>.
 
-------
++---+
 <project>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>my-test-app</artifactId>
@@ -145,11 +145,11 @@ Referencing the Maven Classpaths
     </plugins>
   </build>
 </project>
-------
++---+
 
  The <<<build.xml>>>:
 
-------
++---+
 <?xml version="1.0"?>
 <project name="test6">
 
@@ -163,5 +163,4 @@ Referencing the Maven Classpaths
     </target>
 
 </project>
-------
-
++---+

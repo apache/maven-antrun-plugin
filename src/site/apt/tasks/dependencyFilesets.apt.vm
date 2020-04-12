@@ -24,7 +24,7 @@
  ~~ under the License.
 
  ~~ NOTE: For help with the syntax of this file, see:
- ~~ http://maven.apache.org/doxia/references/apt-format.html
+ ~~ https://maven.apache.org/doxia/references/apt-format.html
  
 DependencyFilesets Task
 
@@ -54,8 +54,8 @@ DependencyFilesets Task
 * Example
 
   This example shows how to access individual dependencies and the combined dependency fileset.
-  
-------
+
++---+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
@@ -69,23 +69,23 @@ DependencyFilesets Task
             </goals>
             <configuration>
               <target>
-        
+
                 <dependencyfilesets prefix="mydeps."/>
                 <mkdir dir="target/dependencies"/>
                 <copy todir="target/dependencies">
                   <fileset refid="mydeps.junit:junit:jar"/>
                   <fileset refid="mydeps.org.apache.ant:ant:jar"/>
                 </copy>
-                
+
                 <mkdir dir="target/dependencies2"/>
                 <copy todir="target/dependencies2" flatten="true">
                   <fileset refid="mydeps.maven.project.dependencies"/>
                 </copy>
-        
+
               </target>
             </configuration>
           </execution>
         </executions>
       </plugin>
-------
++---+
 

@@ -24,14 +24,14 @@
  ~~ under the License.
 
  ~~ NOTE: For help with the syntax of this file, see:
- ~~ http://maven.apache.org/doxia/references/apt-format.html
+ ~~ https://maven.apache.org/doxia/references/apt-format.html
 
 Using <<<\<target/\>>>> Attributes
 
  You can specify attributes in the <<<\<target/\>>>> configuration to execute or not Ant tasks
  depending some conditions. For example, to skip Ant call, you could add the following:
 
-------
++---+
 <project>
   ...
   <build>
@@ -62,4 +62,4 @@ Using <<<\<target/\>>>> Attributes
   </build>
   ...
 </project>
-------
++---+

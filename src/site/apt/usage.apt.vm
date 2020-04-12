@@ -24,7 +24,7 @@
  ~~ under the License.
 
  ~~ NOTE: For help with the syntax of this file, see:
- ~~ http://maven.apache.org/doxia/references/apt-format.html
+ ~~ https://maven.apache.org/doxia/references/apt-format.html
 
 Usage
 
@@ -38,7 +38,7 @@ Usage
   it would not do anything). Below is the template for
   <<<maven-antrun-plugin>>>'s <<<pom.xml>>>.
 
-------
++---+
 <project>
   [...]
   <build>
@@ -70,7 +70,7 @@ Usage
   </build>
   [...]
 </project>
-------
++---+
 
   Moreover, you can add a script to each lifecycle phase, by duplicating the
   <<<\<execution/\>>>> section and specifying a new phase.
@@ -78,7 +78,7 @@ Usage
   Ultimately, you could specify some Ant {{{http://ant.apache.org/manual/using.html#targets}<<<\<target/\>>>>}}
   attributes in the <<<\<target/\>>>> tag. Only <<<depends>>> attribute in Ant <<<\<target/\>>>> is not wrapped.
 
-------
++---+
 [...]
 <configuration>
   <target name="The name of the target"
@@ -95,7 +95,7 @@ Usage
   </target>
 <configuration>
 [...]
-------
++----+
 
 * Additional source directories
 
@@ -123,10 +123,10 @@ Usage
   If the Maven property you want to use is not available in an external file, you
   will have to redefine the property before calling <ant>.
   
-------
++---+
   <property name="maven.project.url" value="\${project.url}"/>
   <ant antfile="build.xml"/>
-------
++---+
 
 * Ant Expressions to Maven Expressions Mapping
 
@@ -151,7 +151,7 @@ Usage
 *-----------------------------------+-----------------------------------+
 | <<<Chmod>>>                       | {{{../maven-assembly-plugin/}<<<maven-assembly-plugin>>>}}             |
 *-----------------------------------+-----------------------------------+
-| <<<Condition>>>                   | {{{http://maven.apache.org/guides/introduction/introduction-to-profiles.html}<<<profiles>>>}}                         |
+| <<<Condition>>>                   | {{{/guides/introduction/introduction-to-profiles.html}<<<profiles>>>}}                         |
 *-----------------------------------+-----------------------------------+
 | <<<Copy>>>                        | {{{../maven-resources-plugin/}<<<maven-resources-plugin>>>}}            |
 *-----------------------------------+-----------------------------------+

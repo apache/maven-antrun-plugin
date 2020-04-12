@@ -52,8 +52,8 @@ ${project.name}
    * <<<tasks>>>: use <<<target>>> instead;
 
    * <<<sourceRoot>>> and <<<testSourceRoot>>>: you can use the 
-   {{{https://www.mojohaus.org/build-helper-maven-plugin/}build-helper-maven-plugin}} instead, with its 
-   {{{https://www.mojohaus.org/build-helper-maven-plugin/add-source-mojo.html}add-source}} and 
+   {{{https://www.mojohaus.org/build-helper-maven-plugin/}build-helper-maven-plugin}} instead, with its
+   {{{https://www.mojohaus.org/build-helper-maven-plugin/add-source-mojo.html}add-source}} and
    {{{https://www.mojohaus.org/build-helper-maven-plugin/add-test-source-mojo.html}add-test-source}} goals.
 
   The format <<<maven.dependency.groupId.artifactId[.classifier].type.path>>> to reference the path of a project

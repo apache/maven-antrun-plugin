@@ -24,7 +24,7 @@
  ~~ under the License.
 
  ~~ NOTE: For help with the syntax of this file, see:
- ~~ http://maven.apache.org/doxia/references/apt-format.html
+ ~~ https://maven.apache.org/doxia/references/apt-format.html
  
 VersionMapper
 
@@ -34,8 +34,8 @@ VersionMapper
 * Example
 
   This example shows how to use the version mapper.
-  
-------
+
++---+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
@@ -51,7 +51,7 @@ VersionMapper
               <target>
                 <mapper id="remove-versions"
                         classname="org.apache.maven.ant.tasks.support.VersionMapper"
-                        from="${maven.project.dependencies.versions}" 
+                        from="${maven.project.dependencies.versions}"
                         to="flatten" />
                 <copy todir="lib" flatten="true">
                   <path>
@@ -65,5 +65,5 @@ VersionMapper
         </executions>
       </plugin>
 
-------
++---+
 

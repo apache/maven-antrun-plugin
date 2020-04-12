@@ -24,14 +24,14 @@
  ~~ under the License.
 
  ~~ NOTE: For help with the syntax of this file, see:
- ~~ http://maven.apache.org/doxia/references/apt-format.html
+ ~~ https://maven.apache.org/doxia/references/apt-format.html
 
 Using tasks not included in Ant's default jar
 
  To use Ant tasks not included in the Ant jar, like Ant optional or custom tasks you need to add the dependencies needed for the task
  to run to the plugin classpath and use the <<<maven.plugin.classpath>>> reference if needed.
 
-------
++---+
 <project>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>my-test-app</artifactId>
@@ -71,24 +71,23 @@ Using tasks not included in Ant's default jar
           <dependency>
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
-            <version>1.4.1</version>
+            <version>2.2</version>
           </dependency>
           <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant-commons-net</artifactId>
-            <version>1.8.1</version>
+            <version>1.9.14</version>
           </dependency>
         </dependencies>
       </plugin>
     </plugins>
   </build>
 </project>
-
-------
++---+
 
  Another example of this is the use of {{{http://ant-contrib.sourceforge.net/}Ant-Contrib}} tasks:
 
-------
++---+
 <project>
   [...]
   <build>
@@ -130,4 +129,4 @@ Using tasks not included in Ant's default jar
     </plugins>
   </build>
 </project>
-------
++---+

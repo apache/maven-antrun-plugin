@@ -24,7 +24,7 @@ under the License.
          xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
   <body>
     <links>
-      <item name="Ant" href="http://ant.apache.org/"/>
+      <item name="Ant" href="https://ant.apache.org/"/>
     </links>
 
     <menu name="Overview">
@@ -34,7 +34,7 @@ under the License.
       <item name="Usage" href="usage.html"/>
       <item name="FAQ" href="faq.html"/>
       <!-- According to https://issues.apache.org/jira/browse/MNGSITE-152 -->
-      <item name="License" href="http://www.apache.org/licenses/"/>
+      <item name="License" href="https://www.apache.org/licenses/"/>
       <item name="Download" href="download.html"/>
     </menu>
     <menu name="Examples">
