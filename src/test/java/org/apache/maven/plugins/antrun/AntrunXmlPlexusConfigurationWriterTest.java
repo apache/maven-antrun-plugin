@@ -62,12 +62,11 @@ public class AntrunXmlPlexusConfigurationWriterTest
 
     /**
      * Tests that the XML file produced with the writer is pretty printed and that basic attributes are kept.
-     * 
-     * @throws Exception
+     *
+     * @throws IOException In case of problems
      */
     @Test
-    public void testBasic()
-        throws Exception
+    public void testBasic() throws IOException
     {
         configuration.getChild( "echo", true ).setAttribute( "message", "Hello" );
         configurationWriter.write( configuration, file, "", TARGET_NAME );
@@ -76,12 +75,11 @@ public class AntrunXmlPlexusConfigurationWriterTest
 
     /**
      * Tests that serialization is correct even if Ant target is empty (no children, no attributes except name).
-     * 
-     * @throws Exception
+     *
+     * @throws IOException In case of problems
      */
     @Test
-    public void testEmptyTarget()
-        throws Exception
+    public void testEmptyTarget() throws IOException
     {
         configurationWriter.write( configuration, file, "", TARGET_NAME );
         assertXmlIsExpected( "/configuration-writer/empty-target.xml", file );
@@ -89,12 +87,11 @@ public class AntrunXmlPlexusConfigurationWriterTest
 
     /**
      * Tests that setting a custom prefix ends up in the project namespace in the target element with the correct name.
-     * 
-     * @throws Exception
+     *
+     * @throws IOException In case of problems
      */
     @Test
-    public void testCustomTaskPrefix()
-        throws Exception
+    public void testCustomTaskPrefix() throws IOException
     {
         PlexusConfiguration child = configuration.getChild( "mvn:foo", true );
         child.setAttribute( "attr1", "val1" );
@@ -109,12 +106,11 @@ public class AntrunXmlPlexusConfigurationWriterTest
     /**
      * Tests that combine.children and combine.self attributes in the XML configuration elements are ignored during
      * serialization.
-     * 
-     * @throws Exception
+     *
+     * @throws IOException In case of problems
      */
     @Test
-    public void testCombineAttributes()
-        throws Exception
+    public void testCombineAttributes() throws IOException
     {
         configuration.setAttribute( "combine.children", "append" );
         configuration.setAttribute( "description", "foo" );
