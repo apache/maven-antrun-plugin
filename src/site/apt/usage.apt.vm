@@ -143,7 +143,7 @@ Usage
 *-----------------------------------+-----------------------------------+
 | <<<AntCall>>>                     | {{{../maven-antrun-plugin/}<<<maven-antrun-plugin>>>}}               |
 *-----------------------------------+-----------------------------------+
-| <<<Available>>>                   | {{{http://maven.apache.org/guides/introduction/introduction-to-profiles.html}<<<profiles>>>}}                         |
+| <<<Available>>>                   | {{{/guides/introduction/introduction-to-profiles.html}<<<profiles>>>}}                         |
 *-----------------------------------+-----------------------------------+
 | <<<BUnzip2>>>                     | {{{../maven-assembly-plugin/}<<<maven-assembly-plugin>>>}}             |
 *-----------------------------------+-----------------------------------+
