@@ -40,8 +40,8 @@ under the License.
     <fail unless="line.separator" message="Property not set \${line.separator}"/>
 
     <!-- Dependency artifact properties -->
-    <echo message="junit:junit:jar : ${junit:junit:jar}"/>
-    <fail unless="junit:junit:jar" message="Property not set \${junit:junit:jar}"/>
+    <echo message="org.junit.jupiter:junit-jupiter-engine:jar : ${org.junit.jupiter:junit-jupiter-engine:jar}"/>
+    <fail unless="org.junit.jupiter:junit-jupiter-engine:jar" message="Property not set \${org.junit.jupiter:junit-jupiter-engine:jar}"/>
 
     <!-- Check that the build output dir is pointing to the correct location -->
     <property name="outputDir" location="./target/classes"/>

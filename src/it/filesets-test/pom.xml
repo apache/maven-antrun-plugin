@@ -49,7 +49,7 @@ under the License.
                 <dependencyfilesets prefix="test."/>
                 <mkdir dir="target/dependencies"/>
                 <copy todir="target/dependencies">
-                  <fileset refid="test.junit:junit:jar"/>
+                  <fileset refid="test.org.junit.jupiter:junit-jupiter-engine:jar"/>
                   <fileset refid="test.org.apache.ant:ant:jar"/>
                 </copy>
 
@@ -73,9 +73,9 @@ under the License.
       <version>1.9.14</version>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.6.2</version>
     </dependency>
   </dependencies>
 

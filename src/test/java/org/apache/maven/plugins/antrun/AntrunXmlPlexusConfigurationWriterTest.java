@@ -19,16 +19,17 @@ package org.apache.maven.plugins.antrun;
  * under the License.
  */
 
-import java.io.File;
-import java.io.IOException;
-
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 import org.codehaus.plexus.configuration.xml.XmlPlexusConfiguration;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.xmlunit.builder.Input;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.xmlunit.matchers.CompareMatcher.isIdenticalTo;
@@ -42,7 +43,8 @@ public class AntrunXmlPlexusConfigurationWriterTest
 
     private static final String TARGET_NAME = "main";
 
-    private TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    Path folder;
 
     private AntrunXmlPlexusConfigurationWriter configurationWriter;
 
@@ -50,14 +52,14 @@ public class AntrunXmlPlexusConfigurationWriterTest
 
     private File file;
 
-    @Before
-    public void setUp()
+    @BeforeEach
+    void setUp()
         throws IOException
     {
         configurationWriter = new AntrunXmlPlexusConfigurationWriter();
         configuration = new XmlPlexusConfiguration( "target" );
         configuration.setAttribute( "name", TARGET_NAME );
-        file = folder.newFile();
+        file = Files.createTempFile(folder, "junit", "antrun").toFile();
     }
 
     /**
@@ -123,11 +125,4 @@ public class AntrunXmlPlexusConfigurationWriterTest
     {
         assertThat( Input.from( file ), isIdenticalTo( Input.from( getClass().getResourceAsStream( expected ) ) ) );
     }
-
-    @Rule
-    public TemporaryFolder getFolder()
-    {
-        return folder;
-    }
-
 }
