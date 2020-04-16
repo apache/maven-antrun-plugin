@@ -69,14 +69,9 @@ Using tasks not included in Ant's default jar
         </executions>
         <dependencies>
           <dependency>
-            <groupId>commons-net</groupId>
-            <artifactId>commons-net</artifactId>
-            <version>2.2</version>
-          </dependency>
-          <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant-commons-net</artifactId>
-            <version>1.9.14</version>
+            <version>1.10.7</version>
           </dependency>
         </dependencies>
       </plugin>
