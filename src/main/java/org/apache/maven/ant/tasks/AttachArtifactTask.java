@@ -21,6 +21,7 @@ package org.apache.maven.ant.tasks;
 
 import org.apache.maven.plugins.antrun.AntRunMojo;
 import org.apache.maven.plugins.antrun.MavenAntRunProject;
+import org.apache.maven.plugins.antrun.taskconfig.AttachArtifactConfiguration;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
 import org.apache.tools.ant.BuildException;
@@ -48,25 +49,12 @@ public class AttachArtifactTask
     @SuppressWarnings( "FieldCanBeLocal" )
     private String mavenProjectHelperRefId = AntRunMojo.DEFAULT_MAVEN_PROJECT_HELPER_REFID;
 
-    /**
-     * The file to attach.
-     */
-    private File file;
+    private AttachArtifactConfiguration configuration = new AttachArtifactConfiguration();
 
-    /**
-     * The classifier of the artifact to attach
-     */
-    private String classifier;
-
-    /**
-     * The type of the artifact to attach.  Defaults to file extension.
-     */
-    private String type;
-
-    /** {@inheritDoc} */
     @Override
     public void execute()
     {
+        File file = configuration.getFile();
         if ( file == null )
         {
             throw new BuildException( "File is a required parameter." );
@@ -82,6 +70,7 @@ public class AttachArtifactTask
             throw new BuildException( "Maven project reference not found: " + mavenProjectRefId );
         }
 
+        String type = configuration.getType();
         if ( type == null )
         {
             type = FileUtils.getExtension( file.getName() );
@@ -95,25 +84,10 @@ public class AttachArtifactTask
             throw new BuildException( "Maven project helper reference not found: " + mavenProjectHelperRefId );
         }
 
+        String classifier = configuration.getClassifier();
         log( "Attaching " + file + " as an attached artifact", Project.MSG_VERBOSE );
         MavenProjectHelper projectHelper = getProject().getReference( mavenProjectHelperRefId );
         projectHelper.attachArtifact( mavenProject, type, classifier, file );
-    }
-
-    /**
-     * @return {@link #file}
-     */
-    public File getFile()
-    {
-        return file;
-    }
-
-    /**
-     * @param file {@link #file}
-     */
-    public void setFile( File file )
-    {
-        this.file = file;
     }
 
     /**
@@ -132,35 +106,35 @@ public class AttachArtifactTask
         this.mavenProjectRefId = mavenProjectRefId;
     }
 
-    /**
-     * @return {@link #classifier}
-     */
+    /* Fields delegated to AttachArtifactConfiguration */
+    
+    public File getFile()
+    {
+        return this.configuration.getFile();
+    }
+
+    public void setFile( File file )
+    {
+        this.configuration.setFile( file );
+    }
+
     public String getClassifier()
     {
-        return classifier;
+        return this.configuration.getClassifier();
     }
 
-    /**
-     * @param classifier {@link #classifier}
-     */
     public void setClassifier( String classifier )
     {
-        this.classifier = classifier;
+        this.configuration.setClassifier( classifier );
     }
 
-    /**
-     * @return {@link #type}
-     */
     public String getType()
     {
-        return type;
+        return this.configuration.getType();
     }
 
-    /**
-     * @param type {@link #type}
-     */
     public void setType( String type )
     {
-        this.type = type;
+        this.configuration.setType( type );
     }
 }

@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<model xmlns="http://codehaus-plexus.github.io/MODELLO/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://codehaus-plexus.github.io/MODELLO/1.8.0 https://codehaus-plexus.github.io/modello/xsd/modello-1.8.0.xsd"
+  xml.namespace="http://maven.apache.org/ANTRUN"
+  xml.schemaLocation="https://maven.apache.org/xsd/antrun-${version}.xsd">
+  <id>antrun</id>
+  <name>AntRun</name>
+  
+  <defaults>
+    <default>
+      <key>package</key>
+      <value>org.apache.maven.plugins.antrun.taskconfig</value>
+    </default>
+  </defaults>
+
+  <classes>
+    <class rootElement="true" xml.tagName="attachartifact">
+      <name>AttachArtifactConfiguration</name>
+      <fields>
+        <!-- just a placeholder to generate proper XSD -->
+        <field java.getter="false" java.setter="false" xml.attribute="true" xml.tagName="file">
+          <name>_file_placeholder</name>
+          <type>String</type>
+          <required>true</required>
+          <description>The file to attach to the project</description>
+        </field>
+        <field xml.attribute="true">
+          <name>classifier</name>
+          <type>String</type>
+          <description>A classifier assigned to the artifact</description>
+        </field>
+        <field xml.attribute="true">
+          <name>type</name>
+          <type>String</type>
+          <description>The type of the artifact, zip, war, etc</description>
+        </field>
+      </fields>
+      <codeSegments>
+        <codeSegment>
+        <code><![CDATA[
+        private java.io.File file;
+        
+        public java.io.File getFile()
+        {
+          return this.file;
+        }
+        
+        public void setFile( java.io.File file )
+        {
+          this.file = file;        
+        }
+        ]]></code>
+        </codeSegment>
+      </codeSegments>
+    </class>
+    
+    <class rootElement="true" xml.tagName="dependencyfilesets">
+      <name>DependencyFilesetsConfiguration</name>
+      <fields>
+        <field xml.attribute="true">
+          <name>prefix</name>
+          <type>String</type>
+          <description>String to prepend to all fileset IDs</description>
+        </field>
+        <field xml.attribute="true">
+          <name>projectDependenciesId</name>
+          <type>String</type>
+          <defaultValue>maven.project.dependencies</defaultValue>
+          <description>RefId for the fileset containing all project dependencies</description>
+        </field>
+        <field xml.attribute="true">
+          <name>scopes</name>
+          <type>String</type>
+          <description>Comma separated list of artifact scopes to include</description>
+        </field>
+        <field xml.attribute="true">
+          <name>types</name>
+          <type>String</type>
+          <description>Comma separated list of artifact types to include</description>
+        </field>
+      </fields>
+    </class>
+  </classes>  
+</model>

@@ -153,14 +153,24 @@ public class AntRunMojo
     private String propertyPrefix;
 
     /**
-     * The xml tag prefix to use for the built in Ant tasks. This prefix needs to be prepended to each task referenced
-     * in the antrun target config. For example, a prefix of "mvn" means that the attachartifact task is referenced by
-     * "&lt;mvn:attachartifact&gt;" The default value of an empty string means that no prefix is used for the tasks.
-     *
+     * Maven will look in the target-tag for the namespace of <code>http://maven.apache.org/ANTRUN</code>
+     * or <code>antlib:org.apache.maven.ant.tasks</code>
+     * 
+     * <pre>
+     *   &lt;configuration&gt;
+     *     &lt;target xmlns:mvn="http://maven.apache.org/ANTRUN"&gt;
+     *       &lt;mvn:attachartifact/&gt;
+     *       &lt;mvn:dependencyfilesets/&gt;
+     *     &lt;/target&gt;
+     *   &lt;/configuration&gt;
+     * </pre>
+     * 
+     * @deprecated only here for backwards compatibility 
      * @since 1.5
      */
-    @Parameter( defaultValue = "" )
-    private String customTaskPrefix = "";
+    @Deprecated
+    @Parameter
+    private String customTaskPrefix;
 
     /**
      * The name of a property containing the list of all dependency versions. This is used for the removing the versions
@@ -514,7 +524,8 @@ public class AntRunMojo
         Typedef typedef = new Typedef();
         typedef.setProject( antProject );
         typedef.setResource( ANTLIB );
-        if ( !customTaskPrefix.isEmpty() )
+        
+        if ( getTaskPrefix() != null )
         {
             typedef.setURI( TASK_URI );
         }
@@ -535,9 +546,35 @@ public class AntRunMojo
         buildFile.getParentFile().mkdirs();
 
         AntrunXmlPlexusConfigurationWriter xmlWriter = new AntrunXmlPlexusConfigurationWriter();
-        xmlWriter.write( target, buildFile, customTaskPrefix, targetName );
+
+        String taskPrefix = getTaskPrefix();
+        if ( taskPrefix != null )
+        {
+            // replace namespace as Ant expects it to be
+            target.setAttribute( "xmlns:" + taskPrefix, TASK_URI );    
+        }
+
+        xmlWriter.write( target, buildFile, "", targetName );
 
         return buildFile;
+    }
+
+    private String getTaskPrefix()
+    {
+        String taskPrefix = this.customTaskPrefix;
+        if ( taskPrefix == null )
+        {
+            for ( String name : target.getAttributeNames() )
+            {
+                if ( name.startsWith( "xmlns:" ) 
+                        && "http://maven.apache.org/ANTRUN".equals( target.getAttribute( name ) ) )
+                {
+                    taskPrefix = name.substring( "xmlns:".length() );
+                    break;
+                }
+            }
+        }
+        return taskPrefix;
     }
 
     /**

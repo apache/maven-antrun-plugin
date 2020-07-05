@@ -25,6 +25,7 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.filter.AndArtifactFilter;
 import org.apache.maven.plugins.antrun.AntRunMojo;
+import org.apache.maven.plugins.antrun.taskconfig.DependencyFilesetsConfiguration;
 import org.apache.maven.project.MavenProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -43,60 +44,12 @@ import java.util.Set;
 public class DependencyFilesetsTask
     extends Task
 {
-
-    /**
-     * The default project dependencies id.
-     */
-    public static final String DEFAULT_PROJECT_DEPENDENCIES_ID = "maven.project.dependencies";
-
     /**
      * The project ref Id of the project being used.
      */
     private String mavenProjectId = AntRunMojo.DEFAULT_MAVEN_PROJECT_REFID;
 
-    /**
-     * The id to store the dependencies fileset.
-     */
-    private String projectDependenciesId = DEFAULT_PROJECT_DEPENDENCIES_ID;
-
-    /**
-     * @return {@link #projectDependenciesId}
-     */
-    public String getProjectDependenciesId()
-    {
-        return projectDependenciesId;
-    }
-
-    /**
-     * @param projectDependenciesId {@link #projectDependenciesId}
-     */
-    public void setProjectDependenciesId( String projectDependenciesId )
-    {
-        this.projectDependenciesId = projectDependenciesId;
-    }
-
-    /**
-     * The string to prepend to all dependency filesets.
-     */
-    private String prefix = "";
-
-    /**
-     * A comma separated list of artifact types to include.
-     */
-    private String types = "";
-
-    /**
-     * A comma separated list of dependency scopes to include.
-     */
-    private String scopes = "";
-
-    /**
-     * Create instance.
-     */
-    public DependencyFilesetsTask()
-    {
-
-    }
+    private DependencyFilesetsConfiguration configuration = new DependencyFilesetsConfiguration();
 
     /** {@inheritDoc} */
     @Override
@@ -138,7 +91,7 @@ public class DependencyFilesetsTask
             getProject().addReference( fileSetName, singleArtifactFileSet );
         }
 
-        getProject().addReference( ( getPrefix() + projectDependenciesId ), dependenciesFileSet );
+        getProject().addReference( ( getPrefix() + getProjectDependenciesId() ), dependenciesFileSet );
     }
 
     /**
@@ -162,6 +115,7 @@ public class DependencyFilesetsTask
      */
     public String getPrefix()
     {
+        String prefix = configuration.getPrefix();
         if ( prefix == null )
         {
             prefix = "";
@@ -175,7 +129,7 @@ public class DependencyFilesetsTask
      */
     public void setPrefix( String prefix )
     {
-        this.prefix = prefix;
+        this.configuration.setPrefix( prefix );
     }
 
     /**
@@ -183,7 +137,7 @@ public class DependencyFilesetsTask
      */
     public String getTypes()
     {
-        return types;
+        return this.configuration.getTypes();
     }
 
     /**
@@ -191,7 +145,7 @@ public class DependencyFilesetsTask
      */
     public void setTypes( String types )
     {
-        this.types = types;
+        this.configuration.setTypes( types );
     }
 
     /**
@@ -199,7 +153,7 @@ public class DependencyFilesetsTask
      */
     public String getScopes()
     {
-        return scopes;
+        return this.configuration.getScopes();
     }
 
     /**
@@ -207,7 +161,23 @@ public class DependencyFilesetsTask
      */
     public void setScopes( String scopes )
     {
-        this.scopes = scopes;
+        this.configuration.setScopes( scopes );
+    }
+
+    /**
+     * @return {@link #projectDependenciesId}
+     */
+    public String getProjectDependenciesId()
+    {
+        return this.configuration.getProjectDependenciesId();
+    }
+
+    /**
+     * @param projectDependenciesId {@link #projectDependenciesId}
+     */
+    public void setProjectDependenciesId( String projectDependenciesId )
+    {
+        this.configuration.setProjectDependenciesId( projectDependenciesId );
     }
 
     /**
@@ -218,26 +188,29 @@ public class DependencyFilesetsTask
      */
     public Set<Artifact> filterArtifacts( Set<Artifact> artifacts )
     {
+        String scopes = getScopes();
         if ( scopes == null )
         {
             scopes = "";
         }
+        
+        String types = getTypes();
         if ( types == null )
         {
             types = "";
         }
 
-        if ( scopes.equals( "" ) && types.equals( "" ) )
+        if ( "".equals( scopes ) && "".equals( types ) )
         {
             return artifacts;
         }
 
         AndArtifactFilter filter = new AndArtifactFilter();
-        if ( !scopes.equals( "" ) )
+        if ( !"".equals( scopes ) )
         {
             filter.add( new SpecificScopesArtifactFilter( getScopes() ) );
         }
-        if ( !types.equals( "" ) )
+        if ( !"".equals( types ) )
         {
             filter.add( new TypesArtifactFilter( getTypes() ) );
         }
