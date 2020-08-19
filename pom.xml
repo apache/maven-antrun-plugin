@@ -138,7 +138,7 @@ under the License.
       <plugin>
         <groupId>org.codehaus.modello</groupId>
         <artifactId>modello-maven-plugin</artifactId>
-        <version>1.10.0</version>
+        <version>1.11</version>
         <configuration>
           <models>
             <model>src/main/mdo/antrun.mdo</model>
