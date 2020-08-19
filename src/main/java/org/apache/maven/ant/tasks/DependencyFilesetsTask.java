@@ -111,7 +111,7 @@ public class DependencyFilesetsTask
     }
 
     /**
-     * @return {@link #prefix}
+     * @return prefix Prefix to be added to each of the dependency filesets
      */
     public String getPrefix()
     {
@@ -125,7 +125,7 @@ public class DependencyFilesetsTask
 
     /**
      * Prefix to be added to each of the dependency filesets. Default is empty string.
-     * @param prefix {@link #prefix}
+     * @param prefix String to prepend to all fileset IDs.
      */
     public void setPrefix( String prefix )
     {
@@ -133,7 +133,7 @@ public class DependencyFilesetsTask
     }
 
     /**
-     * @return {@link #types}
+     * @return types Comma separated list of artifact types to include.
      */
     public String getTypes()
     {
@@ -141,7 +141,7 @@ public class DependencyFilesetsTask
     }
 
     /**
-     * @param types {@link #types}
+     * @param types Comma separated list of artifact types to include.
      */
     public void setTypes( String types )
     {
@@ -149,7 +149,7 @@ public class DependencyFilesetsTask
     }
 
     /**
-     * @return {@link #scopes}
+     * @return scopes Comma separated list of artifact scopes to include.
      */
     public String getScopes()
     {
@@ -157,7 +157,7 @@ public class DependencyFilesetsTask
     }
 
     /**
-     * @param scopes {@link #scopes}
+     * @param scopes Comma separated list of artifact scopes to include.
      */
     public void setScopes( String scopes )
     {
@@ -165,7 +165,7 @@ public class DependencyFilesetsTask
     }
 
     /**
-     * @return {@link #projectDependenciesId}
+     * @return RefId for the fileset containing all project dependencies - default <code>maven.project.dependencies</code>
      */
     public String getProjectDependenciesId()
     {
@@ -173,7 +173,7 @@ public class DependencyFilesetsTask
     }
 
     /**
-     * @param projectDependenciesId {@link #projectDependenciesId}
+     * @param projectDependenciesId RefId for the fileset containing all project dependencies
      */
     public void setProjectDependenciesId( String projectDependenciesId )
     {
