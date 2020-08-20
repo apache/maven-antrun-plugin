@@ -165,7 +165,7 @@ public class DependencyFilesetsTask
     }
 
     /**
-     * @return RefId for the fileset containing all project dependencies - default <code>maven.project.dependencies</code>
+     * @return RefId for the fileset containing all project dependencies - default maven.project.dependencies
      */
     public String getProjectDependenciesId()
     {
