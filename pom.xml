@@ -26,7 +26,7 @@ under the License.
     <artifactId>maven-plugins</artifactId>
     <groupId>org.apache.maven.plugins</groupId>
     <version>34</version>
-    <relativePath />
+    <relativePath/>
   </parent>
 
   <artifactId>maven-antrun-plugin</artifactId>
@@ -62,7 +62,7 @@ under the License.
   </distributionManagement>
 
   <properties>
-    <mavenVersion>3.1.0</mavenVersion>
+    <mavenVersion>3.1.1</mavenVersion>
     <javaVersion>8</javaVersion>
     <project.build.outputTimestamp>2020-04-12T07:51:40Z</project.build.outputTimestamp>
   </properties>
