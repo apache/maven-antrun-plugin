@@ -143,6 +143,9 @@ under the License.
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.3.1</version>
+          <configuration> <!--  remove after MPOM-269 -->
+            <tagletArtifacts combine.self="override"/>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -169,7 +172,7 @@ under the License.
       <plugin>
         <groupId>org.codehaus.modello</groupId>
         <artifactId>modello-maven-plugin</artifactId>
-        <version>1.10.0</version><!-- 1.11 error: There are more than one class as root element for this version -->
+        <version>1.11</version>
         <configuration>
           <models>
             <model>src/main/mdo/antrun.mdo</model>
@@ -184,23 +187,23 @@ under the License.
               <goal>java</goal>
             </goals>
           </execution>
-          <execution>
-            <id>resources</id>
-            <phase>pre-site</phase>
-            <goals>
-              <goal>xsd</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>target/generated-site/resources/xsd</outputDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>documentation</id>
-            <phase>pre-site</phase>
-            <goals>
-              <goal>xdoc</goal>
-            </goals>
-          </execution>
+<!--           <execution> --><!-- error: There are more than one class as root element for this version -->
+<!--             <id>resources</id> -->
+<!--             <phase>pre-site</phase> -->
+<!--             <goals> -->
+<!--               <goal>xsd</goal> -->
+<!--             </goals> -->
+<!--             <configuration> -->
+<!--               <outputDirectory>target/generated-site/resources/xsd</outputDirectory> -->
+<!--             </configuration> -->
+<!--           </execution> -->
+<!--           <execution> --><!-- error: There are more than one class as root element for this version -->
+<!--             <id>documentation</id> -->
+<!--             <phase>pre-site</phase> -->
+<!--             <goals> -->
+<!--               <goal>xdoc</goal> -->
+<!--             </goals> -->
+<!--           </execution> -->
         </executions>
       </plugin>
     </plugins>
