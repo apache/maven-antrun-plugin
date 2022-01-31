@@ -65,7 +65,7 @@ under the License.
     <mavenVersion>3.2.5</mavenVersion>
     <javaVersion>8</javaVersion>
     <surefire.version>2.22.2</surefire.version>
-    <mavenPluginToolsVersion>3.6.2</mavenPluginToolsVersion>
+    <mavenPluginToolsVersion>3.6.4</mavenPluginToolsVersion>
     <project.build.outputTimestamp>2020-04-12T07:51:40Z</project.build.outputTimestamp>
   </properties>
 
