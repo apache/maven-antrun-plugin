@@ -1,5 +1,3 @@
-package org.apache.maven.ant.tasks;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,6 +16,9 @@ package org.apache.maven.ant.tasks;
  * specific language governing permissions and limitations
  * under the License.
  */
+package org.apache.maven.ant.tasks;
+
+import java.io.File;
 
 import org.apache.maven.plugins.antrun.AntRunMojo;
 import org.apache.maven.plugins.antrun.MavenAntRunProject;
@@ -29,14 +30,10 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.codehaus.plexus.util.FileUtils;
 
-import java.io.File;
-
 /**
- * 
+ *
  */
-public class AttachArtifactTask
-    extends Task
-{
+public class AttachArtifactTask extends Task {
 
     /**
      * The refId of the Maven project.
@@ -46,95 +43,81 @@ public class AttachArtifactTask
     /**
      * The refId of the Maven project helper component.
      */
-    @SuppressWarnings( "FieldCanBeLocal" )
+    @SuppressWarnings("FieldCanBeLocal")
     private String mavenProjectHelperRefId = AntRunMojo.DEFAULT_MAVEN_PROJECT_HELPER_REFID;
 
     private AttachArtifactConfiguration configuration = new AttachArtifactConfiguration();
 
     @Override
-    public void execute()
-    {
+    public void execute() {
         File file = configuration.getFile();
-        if ( file == null )
-        {
-            throw new BuildException( "File is a required parameter." );
+        if (file == null) {
+            throw new BuildException("File is a required parameter.");
         }
 
-        if ( !file.exists() )
-        {
-            throw new BuildException( "File does not exist: " + file );
+        if (!file.exists()) {
+            throw new BuildException("File does not exist: " + file);
         }
 
-        if ( this.getProject().getReference( mavenProjectRefId ) == null )
-        {
-            throw new BuildException( "Maven project reference not found: " + mavenProjectRefId );
+        if (this.getProject().getReference(mavenProjectRefId) == null) {
+            throw new BuildException("Maven project reference not found: " + mavenProjectRefId);
         }
 
         String type = configuration.getType();
-        if ( type == null )
-        {
-            type = FileUtils.getExtension( file.getName() );
+        if (type == null) {
+            type = FileUtils.getExtension(file.getName());
         }
 
         MavenProject mavenProject =
-            ( (MavenAntRunProject) this.getProject().getReference( mavenProjectRefId ) ).getMavenProject();
+                ((MavenAntRunProject) this.getProject().getReference(mavenProjectRefId)).getMavenProject();
 
-        if ( this.getProject().getReference( mavenProjectHelperRefId ) == null )
-        {
-            throw new BuildException( "Maven project helper reference not found: " + mavenProjectHelperRefId );
+        if (this.getProject().getReference(mavenProjectHelperRefId) == null) {
+            throw new BuildException("Maven project helper reference not found: " + mavenProjectHelperRefId);
         }
 
         String classifier = configuration.getClassifier();
-        log( "Attaching " + file + " as an attached artifact", Project.MSG_VERBOSE );
-        MavenProjectHelper projectHelper = getProject().getReference( mavenProjectHelperRefId );
-        projectHelper.attachArtifact( mavenProject, type, classifier, file );
+        log("Attaching " + file + " as an attached artifact", Project.MSG_VERBOSE);
+        MavenProjectHelper projectHelper = getProject().getReference(mavenProjectHelperRefId);
+        projectHelper.attachArtifact(mavenProject, type, classifier, file);
     }
 
     /**
      * @return {@link #mavenProjectRefId}
      */
-    public String getMavenProjectRefId()
-    {
+    public String getMavenProjectRefId() {
         return mavenProjectRefId;
     }
 
     /**
      * @param mavenProjectRefId {@link #mavenProjectRefId}
      */
-    public void setMavenProjectRefId( String mavenProjectRefId )
-    {
+    public void setMavenProjectRefId(String mavenProjectRefId) {
         this.mavenProjectRefId = mavenProjectRefId;
     }
 
     /* Fields delegated to AttachArtifactConfiguration */
-    
-    public File getFile()
-    {
+
+    public File getFile() {
         return this.configuration.getFile();
     }
 
-    public void setFile( File file )
-    {
-        this.configuration.setFile( file );
+    public void setFile(File file) {
+        this.configuration.setFile(file);
     }
 
-    public String getClassifier()
-    {
+    public String getClassifier() {
         return this.configuration.getClassifier();
     }
 
-    public void setClassifier( String classifier )
-    {
-        this.configuration.setClassifier( classifier );
+    public void setClassifier(String classifier) {
+        this.configuration.setClassifier(classifier);
     }
 
-    public String getType()
-    {
+    public String getType() {
         return this.configuration.getType();
     }
 
-    public void setType( String type )
-    {
-        this.configuration.setType( type );
+    public void setType(String type) {
+        this.configuration.setType(type);
     }
 }

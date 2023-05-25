@@ -1,5 +1,3 @@
-package org.apache.maven.ant.tasks.support;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -9,7 +7,7 @@ package org.apache.maven.ant.tasks.support;
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
@@ -18,6 +16,7 @@ package org.apache.maven.ant.tasks.support;
  * specific language governing permissions and limitations
  * under the License.
  */
+package org.apache.maven.ant.tasks.support;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
@@ -27,9 +26,7 @@ import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
  *
  * @author pgier
  */
-public class SpecificScopesArtifactFilter
-    implements ArtifactFilter
-{
+public class SpecificScopesArtifactFilter implements ArtifactFilter {
     private boolean compileScope;
 
     private boolean runtimeScope;
@@ -45,30 +42,19 @@ public class SpecificScopesArtifactFilter
      *
      * @param scopes A comma separated list of scopes
      */
-    public SpecificScopesArtifactFilter( String scopes )
-    {
-        String[] scopeList = scopes.split( "," );
+    public SpecificScopesArtifactFilter(String scopes) {
+        String[] scopeList = scopes.split(",");
 
-        for ( String aScopeList : scopeList )
-        {
-            if ( aScopeList.trim().equals( Artifact.SCOPE_COMPILE ) )
-            {
+        for (String aScopeList : scopeList) {
+            if (aScopeList.trim().equals(Artifact.SCOPE_COMPILE)) {
                 compileScope = true;
-            }
-            else if ( aScopeList.trim().equals( Artifact.SCOPE_PROVIDED ) )
-            {
+            } else if (aScopeList.trim().equals(Artifact.SCOPE_PROVIDED)) {
                 providedScope = true;
-            }
-            else if ( aScopeList.trim().equals( Artifact.SCOPE_RUNTIME ) )
-            {
+            } else if (aScopeList.trim().equals(Artifact.SCOPE_RUNTIME)) {
                 runtimeScope = true;
-            }
-            else if ( aScopeList.trim().equals( Artifact.SCOPE_SYSTEM ) )
-            {
+            } else if (aScopeList.trim().equals(Artifact.SCOPE_SYSTEM)) {
                 systemScope = true;
-            }
-            else if ( aScopeList.trim().equals( Artifact.SCOPE_TEST ) )
-            {
+            } else if (aScopeList.trim().equals(Artifact.SCOPE_TEST)) {
                 testScope = true;
             }
         }
@@ -76,30 +62,18 @@ public class SpecificScopesArtifactFilter
 
     /** {@inheritDoc} */
     @Override
-    public boolean include( Artifact artifact )
-    {
-        if ( Artifact.SCOPE_COMPILE.equals( artifact.getScope() ) )
-        {
+    public boolean include(Artifact artifact) {
+        if (Artifact.SCOPE_COMPILE.equals(artifact.getScope())) {
             return compileScope;
-        }
-        else if ( Artifact.SCOPE_RUNTIME.equals( artifact.getScope() ) )
-        {
+        } else if (Artifact.SCOPE_RUNTIME.equals(artifact.getScope())) {
             return runtimeScope;
-        }
-        else if ( Artifact.SCOPE_TEST.equals( artifact.getScope() ) )
-        {
+        } else if (Artifact.SCOPE_TEST.equals(artifact.getScope())) {
             return testScope;
-        }
-        else if ( Artifact.SCOPE_PROVIDED.equals( artifact.getScope() ) )
-        {
+        } else if (Artifact.SCOPE_PROVIDED.equals(artifact.getScope())) {
             return providedScope;
-        }
-        else if ( Artifact.SCOPE_SYSTEM.equals( artifact.getScope() ) )
-        {
+        } else if (Artifact.SCOPE_SYSTEM.equals(artifact.getScope())) {
             return systemScope;
-        }
-        else
-        {
+        } else {
             return true;
         }
     }

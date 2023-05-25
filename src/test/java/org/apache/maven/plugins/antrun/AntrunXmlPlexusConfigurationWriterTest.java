@@ -1,5 +1,3 @@
-package org.apache.maven.plugins.antrun;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,6 +16,12 @@ package org.apache.maven.plugins.antrun;
  * specific language governing permissions and limitations
  * under the License.
  */
+package org.apache.maven.plugins.antrun;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 import org.codehaus.plexus.configuration.xml.XmlPlexusConfiguration;
@@ -26,11 +30,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.xmlunit.builder.Input;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.xmlunit.matchers.CompareMatcher.isIdenticalTo;
 
@@ -38,8 +37,7 @@ import static org.xmlunit.matchers.CompareMatcher.isIdenticalTo;
  * Test class for {@link AntrunXmlPlexusConfigurationWriter}.
  * @author gboue
  */
-public class AntrunXmlPlexusConfigurationWriterTest
-{
+public class AntrunXmlPlexusConfigurationWriterTest {
 
     private static final String TARGET_NAME = "main";
 
@@ -53,12 +51,10 @@ public class AntrunXmlPlexusConfigurationWriterTest
     private File file;
 
     @BeforeEach
-    void setUp()
-        throws IOException
-    {
+    void setUp() throws IOException {
         configurationWriter = new AntrunXmlPlexusConfigurationWriter();
-        configuration = new XmlPlexusConfiguration( "target" );
-        configuration.setAttribute( "name", TARGET_NAME );
+        configuration = new XmlPlexusConfiguration("target");
+        configuration.setAttribute("name", TARGET_NAME);
         file = Files.createTempFile(folder, "junit", "antrun").toFile();
     }
 
@@ -68,11 +64,10 @@ public class AntrunXmlPlexusConfigurationWriterTest
      * @throws IOException In case of problems
      */
     @Test
-    public void testBasic() throws IOException
-    {
-        configuration.getChild( "echo", true ).setAttribute( "message", "Hello" );
-        configurationWriter.write( configuration, file, "", TARGET_NAME );
-        assertXmlIsExpected( "/configuration-writer/basic.xml", file );
+    public void testBasic() throws IOException {
+        configuration.getChild("echo", true).setAttribute("message", "Hello");
+        configurationWriter.write(configuration, file, "", TARGET_NAME);
+        assertXmlIsExpected("/configuration-writer/basic.xml", file);
     }
 
     /**
@@ -81,10 +76,9 @@ public class AntrunXmlPlexusConfigurationWriterTest
      * @throws IOException In case of problems
      */
     @Test
-    public void testEmptyTarget() throws IOException
-    {
-        configurationWriter.write( configuration, file, "", TARGET_NAME );
-        assertXmlIsExpected( "/configuration-writer/empty-target.xml", file );
+    public void testEmptyTarget() throws IOException {
+        configurationWriter.write(configuration, file, "", TARGET_NAME);
+        assertXmlIsExpected("/configuration-writer/empty-target.xml", file);
     }
 
     /**
@@ -93,16 +87,15 @@ public class AntrunXmlPlexusConfigurationWriterTest
      * @throws IOException In case of problems
      */
     @Test
-    public void testCustomTaskPrefix() throws IOException
-    {
-        PlexusConfiguration child = configuration.getChild( "mvn:foo", true );
-        child.setAttribute( "attr1", "val1" );
-        child.setValue( "The first value." );
-        child = configuration.getChild( "bar", true );
-        child.setAttribute( "attr2", "val2" );
-        child.setValue( "The second value." );
-        configurationWriter.write( configuration, file, "mvn", TARGET_NAME );
-        assertXmlIsExpected( "/configuration-writer/custom-task-prefix.xml", file );
+    public void testCustomTaskPrefix() throws IOException {
+        PlexusConfiguration child = configuration.getChild("mvn:foo", true);
+        child.setAttribute("attr1", "val1");
+        child.setValue("The first value.");
+        child = configuration.getChild("bar", true);
+        child.setAttribute("attr2", "val2");
+        child.setValue("The second value.");
+        configurationWriter.write(configuration, file, "mvn", TARGET_NAME);
+        assertXmlIsExpected("/configuration-writer/custom-task-prefix.xml", file);
     }
 
     /**
@@ -112,17 +105,15 @@ public class AntrunXmlPlexusConfigurationWriterTest
      * @throws IOException In case of problems
      */
     @Test
-    public void testCombineAttributes() throws IOException
-    {
-        configuration.setAttribute( "combine.children", "append" );
-        configuration.setAttribute( "description", "foo" );
-        configuration.getChild( "child", true ).setAttribute( "combine.self", "override" );
-        configurationWriter.write( configuration, file, "", TARGET_NAME );
-        assertXmlIsExpected( "/configuration-writer/combine-attributes.xml", file );
+    public void testCombineAttributes() throws IOException {
+        configuration.setAttribute("combine.children", "append");
+        configuration.setAttribute("description", "foo");
+        configuration.getChild("child", true).setAttribute("combine.self", "override");
+        configurationWriter.write(configuration, file, "", TARGET_NAME);
+        assertXmlIsExpected("/configuration-writer/combine-attributes.xml", file);
     }
 
-    private void assertXmlIsExpected( String expected, File file )
-    {
-        assertThat( Input.from( file ), isIdenticalTo( Input.from( getClass().getResourceAsStream( expected ) ) ) );
+    private void assertXmlIsExpected(String expected, File file) {
+        assertThat(Input.from(file), isIdenticalTo(Input.from(getClass().getResourceAsStream(expected))));
     }
 }

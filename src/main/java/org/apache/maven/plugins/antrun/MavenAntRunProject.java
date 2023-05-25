@@ -1,5 +1,3 @@
-package org.apache.maven.plugins.antrun;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,6 +16,7 @@ package org.apache.maven.plugins.antrun;
  * specific language governing permissions and limitations
  * under the License.
  */
+package org.apache.maven.plugins.antrun;
 
 import org.apache.maven.project.MavenProject;
 
@@ -25,22 +24,18 @@ import org.apache.maven.project.MavenProject;
  * Encapsulates a Maven project with an unsupported clone operation. This makes sure that, when used as a reference in
  * an Ant project, it is passed by reference to sub-projects when <code>inheritRefs</code> is set to <code>true</code>
  * (which would otherwise pass a clone).
- * 
+ *
  * @author gboue
  */
-public class MavenAntRunProject
-{
+public class MavenAntRunProject {
 
     private MavenProject mavenProject;
 
-    public MavenAntRunProject( MavenProject mavenProject )
-    {
+    public MavenAntRunProject(MavenProject mavenProject) {
         this.mavenProject = mavenProject;
     }
 
-    public MavenProject getMavenProject()
-    {
+    public MavenProject getMavenProject() {
         return mavenProject;
     }
-
 }

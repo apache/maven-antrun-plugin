@@ -1,5 +1,3 @@
-package org.apache.maven.ant.tasks.support;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -9,7 +7,7 @@ package org.apache.maven.ant.tasks.support;
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
@@ -18,49 +16,44 @@ package org.apache.maven.ant.tasks.support;
  * specific language governing permissions and limitations
  * under the License.
  */
-
-import org.apache.tools.ant.util.FileNameMapper;
-import org.codehaus.plexus.util.StringUtils;
+package org.apache.maven.ant.tasks.support;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.tools.ant.util.FileNameMapper;
+import org.codehaus.plexus.util.StringUtils;
+
 /**
  * Ant filename mapper to remove version info from filename when copying dependencies.
  *
  * @author <a href="mailto:hboutemy@apache.org">Herve Boutemy</a>
  */
-public class VersionMapper
-    implements FileNameMapper, Comparator<String>
-{
+public class VersionMapper implements FileNameMapper, Comparator<String> {
     private List<String> versions;
 
     private String to;
 
     /** {@inheritDoc} */
     @Override
-    public String[] mapFileName( String sourceFileName )
-    {
-        String originalFileName = new File( sourceFileName ).getName();
-        for ( String version : versions )
-        {
-            int index = originalFileName.indexOf( version );
-            if ( index >= 0 )
-            {
+    public String[] mapFileName(String sourceFileName) {
+        String originalFileName = new File(sourceFileName).getName();
+        for (String version : versions) {
+            int index = originalFileName.indexOf(version);
+            if (index >= 0) {
                 // remove version in artifactId-version(-classifier).type
-                String baseFilename = originalFileName.substring( 0, index - 1 );
-                String extension = originalFileName.substring( index + version.length() );
-                String path = sourceFileName.substring( 0, sourceFileName.length() - originalFileName.length() );
-                if ( "flatten".equals( to ) )
-                {
+                String baseFilename = originalFileName.substring(0, index - 1);
+                String extension = originalFileName.substring(index + version.length());
+                String path = sourceFileName.substring(0, sourceFileName.length() - originalFileName.length());
+                if ("flatten".equals(to)) {
                     path = "";
                 }
-                return new String[]{ path + baseFilename + extension };
+                return new String[] {path + baseFilename + extension};
             }
         }
-        return new String[]{ sourceFileName };
+        return new String[] {sourceFileName};
     }
 
     /**
@@ -69,12 +62,11 @@ public class VersionMapper
      * @param from The string from which we set.
      */
     @Override
-    public void setFrom( String from )
-    {
-        String[] split = StringUtils.split( from, File.pathSeparator );
+    public void setFrom(String from) {
+        String[] split = StringUtils.split(from, File.pathSeparator);
         // sort, from lengthiest to smallest
-        Arrays.sort( split, this );
-        versions = Arrays.asList( split );
+        Arrays.sort(split, this);
+        versions = Arrays.asList(split);
     }
 
     /**
@@ -82,16 +74,14 @@ public class VersionMapper
      * @param to {@link #to}
      */
     @Override
-    public void setTo( String to )
-    {
+    public void setTo(String to) {
         this.to = to;
     }
 
     /** {@inheritDoc} */
     @Override
-    public int compare( String s1, String s2 )
-    {
+    public int compare(String s1, String s2) {
         int lengthDiff = s2.length() - s1.length();
-        return ( lengthDiff != 0 ) ? lengthDiff : s1.compareTo( s2 );
+        return (lengthDiff != 0) ? lengthDiff : s1.compareTo(s2);
     }
 }
