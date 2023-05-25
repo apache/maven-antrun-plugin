@@ -18,7 +18,7 @@
  * under the License.
  */
 
-def antProject = new XmlSlurper().parse(new File(basedir, 'target/antrun/build-myname.xml'))
+def antProject = new groovy.xml.XmlSlurper().parse(new File(basedir, 'target/antrun/build-myname.xml'))
 
 assert antProject.@default == "myname"
 assert antProject.target.size() == 1
