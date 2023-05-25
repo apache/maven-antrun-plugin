@@ -25,7 +25,7 @@ under the License.
   <parent>
     <artifactId>maven-plugins</artifactId>
     <groupId>org.apache.maven.plugins</groupId>
-    <version>34</version>
+    <version>39</version>
     <relativePath />
   </parent>
 
@@ -63,9 +63,6 @@ under the License.
 
   <properties>
     <mavenVersion>3.2.5</mavenVersion>
-    <javaVersion>8</javaVersion>
-    <surefire.version>2.22.2</surefire.version>
-    <mavenPluginToolsVersion>3.6.4</mavenPluginToolsVersion>
     <project.build.outputTimestamp>2022-04-18T19:40:06Z</project.build.outputTimestamp>
   </properties>
 
@@ -96,7 +93,6 @@ under the License.
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
-      <version>3.4.2</version>
     </dependency>
     <dependency>
       <groupId>org.apache.ant</groupId>
@@ -137,73 +133,9 @@ under the License.
             </excludes>
           </configuration>
         </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.0.0</version>
-          <dependencies>
-            <dependency>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>extra-enforcer-rules</artifactId>
-              <version>1.6.1</version>
-            </dependency>
-          </dependencies>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.4.1</version>
-          <configuration> <!--  remove after MPOM-269 -->
-            <tagletArtifacts combine.self="override" />
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-plugin-plugin</artifactId>
-          <version>${mavenPluginToolsVersion}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.12.0</version>
-        </plugin>
-        <!-- remove with parent pom upgrade -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.4.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>3.2.0</version>
-          <dependencies>
-            <dependency>
-              <groupId>com.puppycrawl.tools</groupId>
-              <artifactId>checkstyle</artifactId>
-              <version>9.3</version>
-            </dependency>
-            <dependency>
-              <groupId>org.apache.maven.shared</groupId>
-              <artifactId>maven-shared-resources</artifactId>
-              <version>4</version>
-            </dependency>
-          </dependencies>
-        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.0.0</version>
-        <dependencies>
-          <dependency>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>extra-enforcer-rules</artifactId>
-            <version>1.6.1</version>
-          </dependency>
-        </dependencies>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -216,7 +148,6 @@ under the License.
       <plugin>
         <groupId>org.codehaus.modello</groupId>
         <artifactId>modello-maven-plugin</artifactId>
-        <version>2.0.0</version>
         <configuration>
           <models>
             <model>src/main/mdo/antrun.mdo</model>
