@@ -1,5 +1,3 @@
-package org.apache.maven.ant.tasks.support;
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -9,7 +7,7 @@ package org.apache.maven.ant.tasks.support;
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
@@ -18,19 +16,18 @@ package org.apache.maven.ant.tasks.support;
  * specific language governing permissions and limitations
  * under the License.
  */
-
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
+package org.apache.maven.ant.tasks.support;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
+
 /**
  * Artifact Filter which filters on artifact types.
  */
-public class TypesArtifactFilter
-    implements ArtifactFilter
-{
+public class TypesArtifactFilter implements ArtifactFilter {
     private List<String> types = new ArrayList<>();
 
     /**
@@ -38,26 +35,21 @@ public class TypesArtifactFilter
      *
      * @param types The types.
      */
-    public TypesArtifactFilter( String types )
-    {
-        if ( !types.trim().equals( "" ) )
-        {
-            for ( String type : types.split( "," ) )
-            {
-                this.types.add( type.trim() );
+    public TypesArtifactFilter(String types) {
+        if (!types.trim().equals("")) {
+            for (String type : types.split(",")) {
+                this.types.add(type.trim());
             }
         }
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean include( Artifact artifact )
-    {
+    public boolean include(Artifact artifact) {
         String artifactType = artifact.getType();
-        if ( artifactType == null || artifactType.equals( "" ) )
-        {
+        if (artifactType == null || artifactType.equals("")) {
             artifactType = "jar";
         }
-        return types.contains( artifactType );
+        return types.contains(artifactType);
     }
 }
