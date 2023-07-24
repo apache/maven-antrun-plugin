@@ -63,9 +63,21 @@ under the License.
     <mavenVersion>3.2.5</mavenVersion>
     <surefire.version>3.1.0</surefire.version>
     <maven.plugin.tools.version>3.9.0</maven.plugin.tools.version>
+    <junit5.version>5.10.1</junit5.version>
     <project.build.outputTimestamp>2022-04-18T19:40:06Z</project.build.outputTimestamp>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit5.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.apache.maven</groupId>
@@ -103,7 +115,6 @@ under the License.
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.9.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
