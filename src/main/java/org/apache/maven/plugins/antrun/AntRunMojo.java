@@ -195,7 +195,7 @@ public class AntRunMojo extends AbstractMojo {
      * This folder is added to the list of those folders containing source to be compiled. Use this if your Ant script
      * generates source code.
      *
-     * @deprecated Use the <code>build-helper-maven-plugin</code> to bind source directories. For version 3.0.0, this
+     * @deprecated Use the <code>build-helper-maven-plugin</code> to bind source directories. In version 3.0.0, this
      *             parameter is only defined to break the build if you use it!
      */
     @SuppressWarnings("DeprecatedIsStillUsed")
@@ -224,7 +224,9 @@ public class AntRunMojo extends AbstractMojo {
     private boolean skip;
 
     /**
-     * Specifies whether the Ant properties should be propagated to the Maven properties.
+     * Specifies whether the Ant properties should propagate to the Maven properties.
+     * This only works when the ant task is inline in pom.xml, not when it's loaded from
+     * an external ant build.xml file.
      *
      * @since 1.7
      */
@@ -466,15 +468,15 @@ public class AntRunMojo extends AbstractMojo {
             return;
         }
 
-        getLog().debug("Propagated Ant properties to Maven properties");
+        getLog().debug("Propagating Ant properties to Maven properties");
         Hashtable<String, Object> antProps = antProject.getProperties();
         Properties mavenProperties = mavenProject.getProperties();
 
         for (Map.Entry<String, Object> entry : antProps.entrySet()) {
             String key = entry.getKey();
             if (mavenProperties.getProperty(key) != null) {
-                getLog().debug("Ant property '" + key + "=" + mavenProperties.getProperty(key)
-                        + "' clashs with an existing Maven property, SKIPPING this Ant property propagation.");
+                getLog().warn("Ant property '" + key + "=" + mavenProperties.getProperty(key)
+                        + "' clashes with an existing Maven property, SKIPPING this Ant property propagation.");
                 continue;
             }
             // it is safe to call toString directly since the value cannot be null in Hashtable
@@ -486,7 +488,7 @@ public class AntRunMojo extends AbstractMojo {
      * @param antProject {@link Project}
      */
     public void initMavenTasks(Project antProject) {
-        getLog().debug("Initialize Maven Ant Tasks");
+        getLog().debug("Initializing Maven Ant Tasks");
         Typedef typedef = new Typedef();
         typedef.setProject(antProject);
         typedef.setResource(ANTLIB);
