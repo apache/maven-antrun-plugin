@@ -291,7 +291,7 @@ public class AntRunMojo extends AbstractMojo {
             copyProperties(antProject, mavenProject);
         } catch (BuildException e) {
             StringBuilder sb = new StringBuilder();
-            sb.append("An Ant BuildException has occured: ").append(e.getMessage());
+            sb.append("An Ant BuildException has occurred: ").append(e.getMessage());
             String fragment = findFragment(e);
             if (fragment != null) {
                 sb.append("\n").append(fragment);
