@@ -28,7 +28,7 @@ try
 {
     File depsDir = new File( basedir, "target/dependencies" );
     File antJar = new File( depsDir, "ant-1.10.14.jar" );
-    File junitJar = new File( depsDir, "junit-jupiter-engine-5.10.2.jar" );
+    File junitJar = new File( depsDir, "junit-jupiter-engine-5.12.0.jar" );
 
     if ( ! antJar.exists() || antJar.isDirectory() )
     {
@@ -43,7 +43,7 @@ try
 
     File deps2Dir = new File( basedir, "target/dependencies2" );
     antJar = new File( deps2Dir, "ant-1.10.14.jar" );
-    junitJar = new File( deps2Dir, "junit-jupiter-api-5.10.2.jar" );
+    junitJar = new File( deps2Dir, "junit-jupiter-api-5.12.0.jar" );
 
     if ( ! antJar.exists() || antJar.isDirectory() )
     {
