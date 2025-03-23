@@ -63,8 +63,6 @@ under the License.
     <mavenVersion>3.6.3</mavenVersion>
     <version.xmlunit>2.10.3</version.xmlunit>
     <project.build.outputTimestamp>2022-04-18T19:40:06Z</project.build.outputTimestamp>
-    <!-- remove with parent pom upgrade -->
-    <versions.junit5>5.12.0</versions.junit5>
   </properties>
 
   <dependencies>
@@ -95,6 +93,7 @@ under the License.
     <dependency>
       <groupId>org.apache.maven.plugin-tools</groupId>
       <artifactId>maven-plugin-annotations</artifactId>
+      <version>${version.maven-plugin-tools}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
