@@ -61,7 +61,7 @@ under the License.
 
   <properties>
     <mavenVersion>3.6.3</mavenVersion>
-    <version.xmlunit>2.10.1</version.xmlunit>
+    <version.xmlunit>2.10.2</version.xmlunit>
     <project.build.outputTimestamp>2022-04-18T19:40:06Z</project.build.outputTimestamp>
     <!-- remove with parent pom upgrade -->
     <versions.junit5>5.12.0</versions.junit5>
