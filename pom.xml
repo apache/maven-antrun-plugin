@@ -35,7 +35,7 @@ under the License.
   <description>Runs Ant scripts embedded in the POM</description>
 
   <prerequisites>
-    <maven>${mavenVersion}</maven>
+    <maven>3.6.3</maven>
   </prerequisites>
 
   <scm>
@@ -60,8 +60,13 @@ under the License.
   </distributionManagement>
 
   <properties>
-    <mavenVersion>3.6.3</mavenVersion>
+    <mavenVersion>3.9.11</mavenVersion>
     <version.xmlunit>2.10.4</version.xmlunit>
+
+    <!-- TODO remove with next parent -->
+    <version.maven-compiler-plugin>3.14.1</version.maven-compiler-plugin>
+    <version.maven-invoker-plugin>3.9.1</version.maven-invoker-plugin>
+
     <project.build.outputTimestamp>2022-04-18T19:40:06Z</project.build.outputTimestamp>
   </properties>
 
