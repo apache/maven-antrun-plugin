@@ -53,7 +53,7 @@ under the License.
       </plugin>
       <plugin>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>1.4.1</version>
+        <version>3.6.2</version>
         <executions>
           <execution>
             <id>enforce-properties</id>
