@@ -341,8 +341,7 @@ public class AntRunMojo extends AbstractMojo {
     private void addAntProjectReferences(MavenProject mavenProject, Project antProject)
             throws DependencyResolutionRequiredException {
         Path path = new Path(antProject);
-        String joined = String.join(File.pathSeparator, mavenProject.getCompileClasspathElements());
-        path.setPath(joined);
+        path.setPath(String.join(File.pathSeparator, mavenProject.getCompileClasspathElements()));
 
         /* maven.dependency.classpath it's deprecated as it's equal to maven.compile.classpath */
         antProject.addReference(MAVEN_REFID_PREFIX + "dependency.classpath", path);
