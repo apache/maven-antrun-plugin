@@ -58,7 +58,7 @@ public class VersionMapper implements FileNameMapper, Comparator<String> {
     /**
      * Set the versions identifiers that this mapper can remove from filenames. The separator value used is path
      * separator, as used by dependencies task when setting <code>versionsId</code> property value.
-     * 
+     *
      * @param from the string from which we set
      */
     @Override
