@@ -352,7 +352,7 @@ public class AntRunMojo extends AbstractMojo {
         antProject.addReference(MAVEN_REFID_PREFIX + "runtime.classpath", path);
 
         path = new Path(antProject);
-        path.setPath(String.join(File.pathSeparator, mavenProject.getTestClasspathElements());
+        path.setPath(String.join(File.pathSeparator, mavenProject.getTestClasspathElements()));
         antProject.addReference(MAVEN_REFID_PREFIX + "test.classpath", path);
 
         /* set maven.plugin.classpath with plugin dependencies */
