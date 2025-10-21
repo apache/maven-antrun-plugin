@@ -51,7 +51,6 @@ import org.apache.tools.ant.taskdefs.Typedef;
 import org.apache.tools.ant.types.Path;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 import org.codehaus.plexus.util.ReaderFactory;
-import org.codehaus.plexus.util.StringUtils;
 
 /**
  * <p>
@@ -341,20 +340,20 @@ public class AntRunMojo extends AbstractMojo {
 
     private void addAntProjectReferences(MavenProject mavenProject, Project antProject)
             throws DependencyResolutionRequiredException {
-        Path p = new Path(antProject);
-        p.setPath(StringUtils.join(mavenProject.getCompileClasspathElements().iterator(), File.pathSeparator));
+        Path path = new Path(antProject);
+        path.setPath(String.join(File.pathSeparator, mavenProject.getCompileClasspathElements()));
 
         /* maven.dependency.classpath it's deprecated as it's equal to maven.compile.classpath */
-        antProject.addReference(MAVEN_REFID_PREFIX + "dependency.classpath", p);
-        antProject.addReference(MAVEN_REFID_PREFIX + "compile.classpath", p);
+        antProject.addReference(MAVEN_REFID_PREFIX + "dependency.classpath", path);
+        antProject.addReference(MAVEN_REFID_PREFIX + "compile.classpath", path);
 
-        p = new Path(antProject);
-        p.setPath(StringUtils.join(mavenProject.getRuntimeClasspathElements().iterator(), File.pathSeparator));
-        antProject.addReference(MAVEN_REFID_PREFIX + "runtime.classpath", p);
+        path = new Path(antProject);
+        path.setPath(String.join(File.pathSeparator, mavenProject.getRuntimeClasspathElements()));
+        antProject.addReference(MAVEN_REFID_PREFIX + "runtime.classpath", path);
 
-        p = new Path(antProject);
-        p.setPath(StringUtils.join(mavenProject.getTestClasspathElements().iterator(), File.pathSeparator));
-        antProject.addReference(MAVEN_REFID_PREFIX + "test.classpath", p);
+        path = new Path(antProject);
+        path.setPath(String.join(File.pathSeparator, mavenProject.getTestClasspathElements()));
+        antProject.addReference(MAVEN_REFID_PREFIX + "test.classpath", path);
 
         /* set maven.plugin.classpath with plugin dependencies */
         antProject.addReference(
@@ -388,7 +387,7 @@ public class AntRunMojo extends AbstractMojo {
         }
 
         Path p = new Path(antProject);
-        p.setPath(StringUtils.join(list.iterator(), File.pathSeparator));
+        p.setPath(String.join(File.pathSeparator, list));
 
         return p;
     }
