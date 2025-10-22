@@ -171,17 +171,6 @@ public class AntRunMojo extends AbstractMojo {
     private String versionsPropertyName;
 
     /**
-     * The XML for the Ant task. You can add anything you can add between &lt;target&gt; and &lt;/target&gt; in a
-     * build.xml.
-     *
-     * @deprecated Use {@link #target} instead. For version 3.0.0, this parameter is only defined to break the build if
-     *             you use it!
-     */
-    @Deprecated
-    @Parameter
-    private PlexusConfiguration tasks;
-
-    /**
      * The XML for the Ant target. You can add anything you can add between &lt;target&gt; and &lt;/target&gt; in a
      * build.xml.
      *
@@ -254,7 +243,6 @@ public class AntRunMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        checkDeprecatedParameterUsage(tasks, "tasks", "target");
         checkDeprecatedParameterUsage(sourceRoot, "sourceRoot", "the build-helper-maven-plugin");
         checkDeprecatedParameterUsage(testSourceRoot, "testSourceRoot", "the build-helper-maven-plugin");
         if (skip) {
