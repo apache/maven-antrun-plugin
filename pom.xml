@@ -61,7 +61,7 @@ under the License.
 
   <properties>
     <mavenVersion>3.9.11</mavenVersion>
-    <version.xmlunit>2.10.4</version.xmlunit>
+    <version.xmlunit>2.11.0</version.xmlunit>
 
     <!-- TODO remove with next parent -->
     <version.maven-compiler-plugin>3.14.1</version.maven-compiler-plugin>
