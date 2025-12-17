@@ -60,7 +60,7 @@ under the License.
   </distributionManagement>
 
   <properties>
-    <mavenVersion>3.9.11</mavenVersion>
+    <mavenVersion>3.9.12</mavenVersion>
     <version.xmlunit>2.11.0</version.xmlunit>
 
     <!-- TODO remove with next parent -->
