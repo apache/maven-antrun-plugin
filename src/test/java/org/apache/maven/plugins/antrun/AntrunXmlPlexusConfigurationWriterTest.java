@@ -37,7 +37,7 @@ import static org.xmlunit.matchers.CompareMatcher.isIdenticalTo;
  * Test class for {@link AntrunXmlPlexusConfigurationWriter}.
  * @author gboue
  */
-public class AntrunXmlPlexusConfigurationWriterTest {
+class AntrunXmlPlexusConfigurationWriterTest {
 
     private static final String TARGET_NAME = "main";
 
@@ -64,7 +64,7 @@ public class AntrunXmlPlexusConfigurationWriterTest {
      * @throws IOException In case of problems
      */
     @Test
-    public void testBasic() throws IOException {
+    void basic() throws Exception {
         configuration.getChild("echo", true).setAttribute("message", "Hello");
         configurationWriter.write(configuration, file, "", TARGET_NAME);
         assertXmlIsExpected("/configuration-writer/basic.xml", file);
@@ -76,7 +76,7 @@ public class AntrunXmlPlexusConfigurationWriterTest {
      * @throws IOException In case of problems
      */
     @Test
-    public void testEmptyTarget() throws IOException {
+    void emptyTarget() throws Exception {
         configurationWriter.write(configuration, file, "", TARGET_NAME);
         assertXmlIsExpected("/configuration-writer/empty-target.xml", file);
     }
@@ -87,7 +87,7 @@ public class AntrunXmlPlexusConfigurationWriterTest {
      * @throws IOException In case of problems
      */
     @Test
-    public void testCustomTaskPrefix() throws IOException {
+    void customTaskPrefix() throws Exception {
         PlexusConfiguration child = configuration.getChild("mvn:foo", true);
         child.setAttribute("attr1", "val1");
         child.setValue("The first value.");
@@ -105,7 +105,7 @@ public class AntrunXmlPlexusConfigurationWriterTest {
      * @throws IOException In case of problems
      */
     @Test
-    public void testCombineAttributes() throws IOException {
+    void combineAttributes() throws Exception {
         configuration.setAttribute("combine.children", "append");
         configuration.setAttribute("description", "foo");
         configuration.getChild("child", true).setAttribute("combine.self", "override");
