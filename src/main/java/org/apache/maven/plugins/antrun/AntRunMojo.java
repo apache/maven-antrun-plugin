@@ -461,9 +461,13 @@ public class AntRunMojo extends AbstractMojo {
 
         for (Map.Entry<String, Object> entry : antProps.entrySet()) {
             String key = entry.getKey();
-            if (mavenProperties.getProperty(key) != null) {
-                getLog().warn("Ant property '" + key + "=" + mavenProperties.getProperty(key)
-                        + "' clashes with an existing Maven property, SKIPPING this Ant property propagation.");
+            String mavenValue = mavenProperties.getProperty(key);
+            if (mavenValue != null) {
+                if (!mavenValue.equals(entry.getValue())) {
+                    getLog().info("Ant property '" + key + "=" + entry.getValue()
+                            + "' clashes with an existing Maven property value '" + mavenValue
+                            + "', SKIPPING this Ant property propagation.");
+                }
                 continue;
             }
             // it is safe to call toString directly since the value cannot be null in Hashtable
