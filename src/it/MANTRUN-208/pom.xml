@@ -78,7 +78,7 @@ under the License.
                 <plugin><!-- site lifecycle -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.7.1</version>
+                    <version>@version.maven-site-plugin@</version>
                 </plugin>
                 <!-- default lifecycle jar packaging -->
                 <plugin>
