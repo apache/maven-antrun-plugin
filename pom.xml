@@ -23,7 +23,7 @@ under the License.
   <parent>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-plugins</artifactId>
-    <version>45</version>
+    <version>46</version>
     <relativePath />
   </parent>
 
@@ -62,10 +62,6 @@ under the License.
   <properties>
     <mavenVersion>3.9.12</mavenVersion>
     <version.xmlunit>2.11.0</version.xmlunit>
-
-    <!-- TODO remove with next parent -->
-    <version.maven-compiler-plugin>3.14.1</version.maven-compiler-plugin>
-    <version.maven-invoker-plugin>3.9.1</version.maven-invoker-plugin>
 
     <project.build.outputTimestamp>2025-10-17T18:59:35Z</project.build.outputTimestamp>
   </properties>
