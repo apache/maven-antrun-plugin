@@ -216,6 +216,16 @@ under the License.
           <!--           </execution> -->
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-invoker-plugin</artifactId>
+        <configuration>
+          <scriptVariables>
+            <scriptVarVersionJunit>${versions.junit5}</scriptVarVersionJunit>
+            <scriptVarVersionAnt>${version.ant}</scriptVarVersionAnt>
+          </scriptVariables>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
