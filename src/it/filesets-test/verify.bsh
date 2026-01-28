@@ -27,8 +27,8 @@ import org.codehaus.plexus.util.*;
 try
 {
     File depsDir = new File( basedir, "target/dependencies" );
-    File antJar = new File( depsDir, "ant-1.10.15.jar" );
-    File junitJar = new File( depsDir, "junit-jupiter-engine-5.14.2.jar" );
+    File antJar = new File( depsDir, "ant-" + scriptVarVersionAnt + ".jar" );
+    File junitJar = new File( depsDir, "junit-jupiter-engine-" + scriptVarVersionJunit + ".jar" );
 
     if ( ! antJar.exists() || antJar.isDirectory() )
     {
@@ -42,8 +42,8 @@ try
     }
 
     File deps2Dir = new File( basedir, "target/dependencies2" );
-    antJar = new File( deps2Dir, "ant-1.10.15.jar" );
-    junitJar = new File( deps2Dir, "junit-jupiter-api-5.14.2.jar" );
+    antJar = new File( deps2Dir, "ant-" + scriptVarVersionAnt + ".jar" );
+    junitJar = new File( deps2Dir, "junit-jupiter-api-" + scriptVarVersionJunit + ".jar" );
 
     if ( ! antJar.exists() || antJar.isDirectory() )
     {
