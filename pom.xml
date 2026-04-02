@@ -62,7 +62,7 @@ under the License.
   <properties>
     <mavenVersion>3.9.14</mavenVersion>
     <version.xmlunit>2.11.0</version.xmlunit>
-    <version.ant>1.10.15</version.ant>
+    <version.ant>1.10.16</version.ant>
 
     <project.build.outputTimestamp>2025-10-17T18:59:35Z</project.build.outputTimestamp>
   </properties>
