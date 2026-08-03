@@ -31,7 +31,7 @@ Referencing the Maven Classpaths
   The plugin sets a property in the Ant build for each project dependency.
   Each property name uses the format <<groupId:artifactId:type[:classifier]>>.
 
-  For exam ple, to show the path to a jar dependency with groupId "org.apache" and
+  For example, to show the path to a jar dependency with groupId "org.apache" and
   artifactId "common-util", use this:
 
 +---+
