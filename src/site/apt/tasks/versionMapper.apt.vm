@@ -28,8 +28,8 @@
  
 VersionMapper
 
-  This is an Ant mapper class which can be used to remove the versions from the dependency
-  artifact filenames..
+  This is an Ant mapper.  The mapper removes the version from a dependency
+  artifact filename.
 
 * Example
 
@@ -66,4 +66,3 @@ VersionMapper
       </plugin>
 
 +---+
-

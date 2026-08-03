@@ -28,8 +28,9 @@
 
 Using <<<\<target/\>>>> Attributes
 
- You can specify attributes in the <<<\<target/\>>>> configuration to execute or not Ant tasks
- depending some conditions. For example, to skip Ant call, you could add the following:
+  You can use attributes in the <<<\<target/\>>>> configuration to run or skip
+  Ant tasks.  The attributes depend on conditions.  To skip the Ant call, add
+  this:
 
 +---+
 <project>

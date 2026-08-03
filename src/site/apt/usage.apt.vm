@@ -32,10 +32,9 @@ Usage
 
   The maven-antrun-plugin has only one goal, <<<run>>>.
 
-  This allows Maven to run Ant tasks. To do so, there must be an existing
-  project and maven-antrun-plugin must have its <<<\<target\>>>> tag
-  configured (although it would still execute without the <<<\<target\>>>> tag,
-  it would not do anything). Below is the template for
+  This goal lets Maven run Ant tasks.  You need an existing project.  The
+  plugin must have its <<<\<target\>>>> tag configured.  Without this tag,
+  the plugin executes but does nothing.  Below is the template for
   <<<maven-antrun-plugin>>>'s <<<pom.xml>>>.
 
 +---+
@@ -72,11 +71,11 @@ Usage
 </project>
 +---+
 
-  Moreover, you can add a script to each lifecycle phase, by duplicating the
-  <<<\<execution/\>>>> section and specifying a new phase.
+  You can add a script to each lifecycle phase.  Duplicate the
+  <<<\<execution/\>>>> section.  Specify a new phase in each copy.
 
-  Ultimately, you could specify some Ant {{{http://ant.apache.org/manual/using.html#targets}<<<\<target/\>>>>}}
-  attributes in the <<<\<target/\>>>> tag. Only <<<depends>>> attribute in Ant <<<\<target/\>>>> is not wrapped.
+  You can specify Ant {{{http://ant.apache.org/manual/using.html#targets}<<<\<target/\>>>>}} attributes in the
+  <<<\<target/\>>>> tag.  The plugin wraps all Ant <<<\<target/\>>>> attributes except <<<depends>>>.
 
 +---+
 [...]
@@ -99,19 +98,17 @@ Usage
 
 * Additional source directories
 
-  If your Ant tasks generate additional source code that needs to be added 
-  to the build, you can use the 
-  {{{http://www.mojohaus.org/build-helper-maven-plugin/}build-helper-maven-plugin}}.  
-  The <<<sourceRoot>>> and <<<testSourceRoot>>> options of the antrun plugin are removed as of version 3.0.0.
+  If your Ant tasks generate source code, use the
+  {{{http://www.mojohaus.org/build-helper-maven-plugin/}build-helper-maven-plugin}} to add the code to the
+  build.  The <<<sourceRoot>>> and <<<testSourceRoot>>> options are removed in version 3.0.0.
 
 * Using Maven properties
 
-  All of the properties available to Maven are also available in the target
-  configuration.  However, you may want to call an external Ant build script
-  using the <ant> task.  To avoid name conflicts, only a subset of the properties
-  are passed to the external Ant build.  These include all properties defined in
-  the <properties> section of the POM.  It also includes prefixed versions of
-  some of the commonly used Maven properties.
+  All Maven properties are also available in the target configuration.  When
+  you call an external Ant build script with the <ant> task, the plugin passes
+  only a subset of the properties.  The subset prevents name conflicts.  The
+  subset includes all properties in the <properties> section of the POM.  The
+  subset also includes prefixed versions of common Maven properties.
   
 ------
   maven.project.groupId
@@ -120,8 +117,8 @@ Usage
   etc.
 ------
   
-  If the Maven property you want to use is not available in an external file, you
-  will have to redefine the property before calling <ant>.
+  If a Maven property is not available in an external file, define the
+  property before you call <ant>.
   
 +---+
   <property name="maven.project.url" value="\${project.url}"/>
@@ -130,9 +127,8 @@ Usage
 
 * Ant Expressions to Maven Expressions Mapping
 
-  Some Ant expressions have their respective counterparts in Maven. Thus, one
-  can simply invoke the corresponding Maven expression instead of using
-  maven-antrun-plugin to avoid the unneccessary overhead.
+  Some Ant expressions have a counterpart in Maven.  You can use the Maven
+  expression instead of maven-antrun-plugin.  This avoids extra work.
 
 *-----------------------------------+-----------------------------------+
 | <<Ant Expression>>                | <<Maven Expression>>              |
@@ -227,4 +223,3 @@ Usage
 | <<<Translate>>>                   | {{{../maven-resources-plugin/}<<<maven-resources-plugin>>>}}            |
 |                                   | <Note: Translate can specify its own tokens and can have a different encoding scheme for reading and writing files. maven-resources-plugin however uses the \${...} annotation only and has only one encoding scheme for reading and writing> |
 *-----------------------------------+-----------------------------------+
-
