@@ -35,7 +35,7 @@ ${project.name}
   your Ant tasks to a <<<build.xml>>> file.  Call the file from the POM with
   Ant's {{{https://ant.apache.org/manual/Tasks/ant.html}\<ant/\> task}}.
 
-  A main purpose of this plugin is to help projects migrate from Ant to
+  The main purpose of this plugin is to help projects migrate from Ant to
   Maven.  Some projects depend on custom build functions that Maven does not
   provide by default.  These projects cannot migrate yet.
 
