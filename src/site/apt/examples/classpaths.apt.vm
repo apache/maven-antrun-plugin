@@ -28,27 +28,30 @@
 
 Referencing the Maven Classpaths
 
- A property is set in the Ant build for each project dependency.  Each property name uses the format 
- <<groupId:artifactId:type[:classifier]>>.  For example, to show the path to a 
- jar dependency with groupId "org.apache" and artifactId "common-util", the following could be used.
+  The plugin sets a property in the Ant build for each project dependency.
+  Each property name uses the format <<groupId:artifactId:type[:classifier]>>.
+
+  For example, to show the path to a jar dependency with groupId "org.apache" and
+  artifactId "common-util", use this:
 
 +---+
 #set( $D = '$' )
 <echo message="${D}{org.apache:common-util:jar}"/> 
 +---+
 
- If the dependency includes a classifier, the classifier is appended to the property name.
- For example, groupId "org.apache", artifactId "common-util", type "jar", and classifier "jdk14".
- 
+  If the dependency includes a classifier, the plugin appends the classifier
+  to the property name.  For example, groupId "org.apache", artifactId
+  "common-util", type "jar", and classifier "jdk14":
+
 +---+
 #set( $D = '$' )
 <echo message="${D}{org.apache:common-util:jar:jdk14}"/> 
 +---+
  
- <<Note:>> the old format "maven.dependency.groupId.artifactId[.classifier].type.path" is not supported as of version 
- 3.0.0 of the plugin.
- 
- You can also use these classpath references:
+  <<Note:>> the old format <<maven.dependency.groupId.artifactId[.classifier].type.path>> is not supported
+  in version 3.0.0 of the plugin.
+  
+  You can also use these classpath references:
   
   * <<<maven.compile.classpath>>>
 
@@ -57,9 +60,7 @@ Referencing the Maven Classpaths
   * <<<maven.test.classpath>>>
 
   * <<<maven.plugin.classpath>>>
-  
-
- For example, to display Maven's classpaths using antrun, we can do this
+     To display Maven's classpaths with antrun, use this:
 
 +---+
 <project>
@@ -104,7 +105,7 @@ Referencing the Maven Classpaths
 
 +---+
 
- or alternatively, we can use an external <<<build.xml>>>.
+  Or use an external <<<build.xml>>>:
 
 +---+
 <project>
@@ -147,7 +148,7 @@ Referencing the Maven Classpaths
 </project>
 +---+
 
- The <<<build.xml>>>:
+  The <<<build.xml>>>:
 
 +---+
 <?xml version="1.0"?>

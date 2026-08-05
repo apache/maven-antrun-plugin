@@ -28,17 +28,16 @@
  
 Ant Tasks
  
-   The Maven Antrun Plugin includes some custom Ant tasks which can be used to better integrate with the 
-   Maven build.  This page provides an overview of these tasks.  Click on the task name for more information
-   and examples.
+   The Maven Antrun Plugin includes custom Ant tasks.  The tasks improve the
+   integration with the Maven build.  This page lists the tasks.  Click a task
+   name for more information and examples.
    
 *-----------------------------------------------------+--------------------------------------------------------+
 || Task                                               || Description                                           |
 *---------------+--------------------------------------------------------+
 | {{{./attachArtifact.html}attachartifact}}   | Attach an artifact to the current Maven project   | 
 *---------------+--------------------------------------------------------+
-| {{{./dependencyFilesets.html}dependencyfilesets}}   | Creates a fileset for each of the Maven project dependencies and adds them to the Ant build   | 
+| {{{./dependencyFilesets.html}dependencyfilesets}}   | Creates a fileset for each Maven project dependency and adds the filesets to the Ant build   | 
 *---------------+--------------------------------------------------------+
-| {{{./versionMapper.html}versionMapper}}     | Mapper to remove version from artifact filenames   | 
+| {{{./versionMapper.html}versionMapper}}     | Removes the version from artifact filenames   | 
 *---------------+--------------------------------------------------------+
-   

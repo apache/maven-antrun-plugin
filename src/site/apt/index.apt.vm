@@ -28,18 +28,16 @@
 
 ${project.name}
 
-  This plugin provides the ability to run Ant tasks from within Maven. You can
-  even embed your Ant scripts in the POM!
+  This plugin runs Ant tasks from inside Maven.  You can embed your Ant
+  scripts in the POM.
 
-  It is <not> the intention of this plugin to provide a means of polluting the
-  POM, so it's encouraged to move all your Ant tasks to a <<<build.xml>>> file
-  and just call it from the POM using Ant's
-  {{{https://ant.apache.org/manual/Tasks/ant.html}\<ant/\> task}}.
+  This plugin does not intend to fill the POM with your Ant tasks.  Move all
+  your Ant tasks to a <<<build.xml>>> file.  Call the file from the POM with
+  Ant's {{{https://ant.apache.org/manual/Tasks/ant.html}\<ant/\> task}}.
 
-  One of the main purposes of this plugin is to facilitate the migration from Ant
-  based projects to Maven. Some projects may not currently be able to migrate
-  because they depend on custom build functionality that Maven doesn't provide
-  by default.
+  The main purpose of this plugin is to help projects migrate from Ant to
+  Maven.  Some projects depend on custom build functions that Maven does not
+  provide by default.  These projects cannot migrate yet.
 
 * Goals Overview
 
@@ -47,45 +45,39 @@ ${project.name}
 
 * Major Version Upgrade to version 3.0.0
 
-  Please note that the following parameters have been completely removed from the plugin configuration:
+  The following parameters are removed from the plugin configuration:
 
-   * <<<tasks>>>: use <<<target>>> instead;
+   * <<<tasks>>>: use <<<target>>> instead.
 
-   * <<<sourceRoot>>> and <<<testSourceRoot>>>: you can use the 
-   {{{https://www.mojohaus.org/build-helper-maven-plugin/}build-helper-maven-plugin}} instead, with its
+   * <<<sourceRoot>>> and <<<testSourceRoot>>>: use the
+   {{{https://www.mojohaus.org/build-helper-maven-plugin/}build-helper-maven-plugin}} instead.  Use its
    {{{https://www.mojohaus.org/build-helper-maven-plugin/add-source-mojo.html}add-source}} and
    {{{https://www.mojohaus.org/build-helper-maven-plugin/add-test-source-mojo.html}add-test-source}} goals.
 
-  The format <<<maven.dependency.groupId.artifactId[.classifier].type.path>>> to reference the path of a project
-  dependency as an Ant property has been removed: use <<<groupId:artifactId:type[:classifier]>>> instead.
+  The format <<<maven.dependency.groupId.artifactId[.classifier].type.path>>> no longer references the path of a
+  project dependency as an Ant property.  Use <<<groupId:artifactId:type[:classifier]>>> instead.
 
 * Usage
 
-  General instructions on how to use the AntRun Plugin can be found on the {{{./usage.html}usage page}}. Some more
-  specific use cases are described in the examples given below.
+  The {{{./usage.html}usage page}} contains general instructions for the AntRun Plugin.  The examples below
+  describe specific use cases.
 
-  In case you still have questions regarding the plugin's usage, please have a look at the {{{./faq.html}FAQ}} and feel
-  free to contact the {{{./mailing-lists.html}user mailing list}}. The posts to the mailing list are archived and could
-  already contain the answer to your question as part of an older thread. Hence, it is also worth browsing/searching
-  the {{{./mailing-lists.html}mail archive}}.
+  If you have questions about the plugin, read the {{{./faq.html}FAQ}}.  Contact the
+  {{{./mailing-lists.html}user mailing list}}.  The mailing list posts are archived.  An older thread can
+  contain the answer to your question.  Browse the {{{./mailing-lists.html}mail archive}}.
 
-  If you feel like the plugin is missing a feature or has a defect, you can fill a feature request or bug report in our
-  {{{./issue-management.html}issue tracker}}. When creating a new issue, please provide a comprehensive description of your
-  concern. Especially for fixing bugs it is crucial that the developers can reproduce your problem. For this reason,
-  entire debug logs, POMs or most preferably little demo projects attached to the issue are very much appreciated.
-  Of course, patches are welcome, too. Contributors can check out the project from our
-  {{{./scm.html}source repository}} and will find supplementary information in the
-  {{{/guides/development/guide-helping.html}guide to helping with Maven}}.
+  If the plugin misses a feature or has a defect, report it in the {{{./issue-management.html}issue tracker}}.
+  Describe the issue in detail.  The developers must reproduce your problem to fix a bug.  Attach debug logs,
+  POMs, or a small demo project to the issue.  Patches are welcome.  Get the project from the
+  {{{./scm.html}source repository}}.  Read the {{{/guides/development/guide-helping.html}guide to helping with Maven}}
+  for more information.
 
 * Examples
 
-  To provide you with better understanding on some usages of the Maven AntRun
-  Plugin, you can take a look into the following examples:
+  These examples show how to use the Maven AntRun Plugin:
 
   * {{{./examples/classpaths.html}Referencing the Maven Classpaths}}
 
   * {{{./examples/tasksAttributes.html}Using <<<\<target/\>>>> Attributes}}
 
   * {{{./examples/customTasks.html}Using tasks not included in Ant's default jar}}
-
-  []
