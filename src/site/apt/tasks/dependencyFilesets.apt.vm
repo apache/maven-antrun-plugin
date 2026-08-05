@@ -35,8 +35,11 @@ DependencyFilesets Task
   <<<[prefix]groupId:artifactId:[classifier]:type>>>.  A junit jar dependency
   gets the fileset ID <<<junit:junit:jar>>>.
   
-  The task also creates a fileset with all the project dependencies.  The
-  fileset uses the default ID maven.project.dependencies.
+  The task also creates a resource collection with all the project
+  dependencies.  The resource collection uses the default ID maven.project.dependencies.
+  It is assembled from the actual resolved artifact files, so artifacts located
+  outside the local repository (for example reactor inter-module dependencies)
+  are included as well.
 
 * Task Parameters
 
@@ -45,7 +48,7 @@ DependencyFilesets Task
 *---------------+--------------------------------------------------------+-----------------------------------*
 | prefix        | String to prepend to all fileset IDs                   | No. Defaults to empty string      |
 *---------------+--------------------------------------------------------+-----------------------------------*
-| projectDependenciesId  | RefId for the fileset with all project dependencies  | No. Defaults to maven.project.dependencies    |
+| projectDependenciesId  | RefId for the resource collection with all project dependencies  | No. Defaults to maven.project.dependencies    |
 *---------------+--------------------------------------------------------+-----------------------------------*
 | scopes        | Comma separated list of artifact scopes to include     | No. Defaults to all artifacts     |
 *---------------+--------------------------------------------------------+-----------------------------------*
@@ -82,7 +85,7 @@ DependencyFilesets Task
 
                 <mkdir dir="target/dependencies2"/>
                 <copy todir="target/dependencies2" flatten="true">
-                  <fileset refid="mydeps.maven.project.dependencies"/>
+                  <resources refid="mydeps.maven.project.dependencies"/>
                 </copy>
 
               </target>

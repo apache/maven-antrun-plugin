@@ -18,14 +18,12 @@
  */
 package org.apache.maven.ant.tasks;
 
-import java.io.File;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.apache.maven.ant.tasks.support.SpecificScopesArtifactFilter;
 import org.apache.maven.ant.tasks.support.TypesArtifactFilter;
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.filter.AndArtifactFilter;
 import org.apache.maven.plugins.antrun.AntRunMojo;
 import org.apache.maven.plugins.antrun.taskconfig.DependencyFilesetsConfiguration;
@@ -33,6 +31,7 @@ import org.apache.maven.project.MavenProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
+import org.apache.tools.ant.types.resources.Union;
 
 /**
  * Ant task which create a fileset for each dependency in a Maven project, and a
@@ -57,30 +56,19 @@ public class DependencyFilesetsTask extends Task {
 
         MavenProject mavenProject = this.getProject().getReference("maven.project");
 
-        // Add filesets for depenedency artifacts
+        // Add filesets for dependency artifacts
         Set<Artifact> depArtifacts = filterArtifacts(mavenProject.getArtifacts());
 
-        FileSet dependenciesFileSet = new FileSet();
+        Union dependenciesFileSet = new Union();
         dependenciesFileSet.setProject(getProject());
-        ArtifactRepository localRepository = getProject().getReference("maven.local.repository");
-        dependenciesFileSet.setDir(new File(localRepository.getBasedir()));
-
-        if (depArtifacts.isEmpty()) {
-            // For performance reasons in case of huge local repo, tell Ant to include a single thing, otherwise the
-            // whole directory is scanned (even though ** is excluded).
-            dependenciesFileSet.createInclude().setName(".");
-            dependenciesFileSet.createExclude().setName("**");
-        }
 
         for (Artifact artifact : depArtifacts) {
-            String relativeArtifactPath = localRepository.pathOf(artifact);
-            dependenciesFileSet.createInclude().setName(relativeArtifactPath);
-
             String fileSetName = getPrefix() + artifact.getDependencyConflictId();
 
             FileSet singleArtifactFileSet = new FileSet();
             singleArtifactFileSet.setProject(getProject());
             singleArtifactFileSet.setFile(artifact.getFile());
+            dependenciesFileSet.add(singleArtifactFileSet);
             getProject().addReference(fileSetName, singleArtifactFileSet);
         }
 
