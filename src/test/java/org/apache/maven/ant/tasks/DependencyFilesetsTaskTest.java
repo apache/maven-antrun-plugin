@@ -23,9 +23,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.maven.artifact.Artifact;
@@ -35,14 +33,12 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.plugins.antrun.AntRunMojo;
 import org.apache.maven.project.MavenProject;
 import org.apache.tools.ant.Project;
-import org.apache.tools.ant.types.FileSet;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Test class for {@link DependencyFilesetsTask}.
@@ -50,8 +46,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 class DependencyFilesetsTaskTest {
 
     private static final String CUSTOM_PROJECT_REFID = "maven.project.alt";
-
-    private static final String DEFAULT_DEPENDENCIES_REFID = "maven.project.dependencies";
 
     private static final String LOCAL_REPOSITORY_REFID = "maven.local.repository";
 
@@ -82,9 +76,8 @@ class DependencyFilesetsTaskTest {
 
         task.execute();
 
-        FileSet fileset = (FileSet) antProject.getReference(DEFAULT_DEPENDENCIES_REFID);
-        assertThat(includePatterns(antProject, fileset), hasItem(artifactPath(customArtifact)));
-        assertThat(includePatterns(antProject, fileset), not(hasItem(artifactPath(defaultArtifact))));
+        assertNotNull(antProject.getReference(customArtifact.getDependencyConflictId()));
+        assertNull(antProject.getReference(defaultArtifact.getDependencyConflictId()));
     }
 
     /**
@@ -108,12 +101,7 @@ class DependencyFilesetsTaskTest {
 
         assertDoesNotThrow(task::execute);
 
-        FileSet fileset = (FileSet) antProject.getReference(DEFAULT_DEPENDENCIES_REFID);
-        assertThat(includePatterns(antProject, fileset), hasItem(artifactPath(customArtifact)));
-    }
-
-    private List<String> includePatterns(Project antProject, FileSet fileset) {
-        return Arrays.asList(fileset.mergePatterns(antProject).getIncludePatterns(antProject));
+        assertNotNull(antProject.getReference(customArtifact.getDependencyConflictId()));
     }
 
     private MavenProject newProject(Artifact artifact) {
