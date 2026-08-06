@@ -40,21 +40,6 @@ try
       System.out.println( "Junit jar file does not exist: " + junitJar );
       return false;
     }
-
-    File deps2Dir = new File( basedir, "target/dependencies2" );
-    antJar = new File( deps2Dir, "ant-" + scriptVarVersionAnt + ".jar" );
-    junitJar = new File( deps2Dir, "junit-jupiter-api-" + scriptVarVersionJunit + ".jar" );
-
-    if ( ! antJar.exists() || antJar.isDirectory() )
-    {
-      System.out.println( "Ant jar file does not exist: " + antJar );
-      return false;
-    }
-    if ( ! junitJar.exists() || junitJar.isDirectory() )
-    {
-      System.out.println( "Junit jar file does not exist: " + junitJar );
-      return false;
-    }
 }
 catch( Throwable t )
 {
