@@ -18,12 +18,14 @@
  */
 package org.apache.maven.ant.tasks;
 
+import java.io.File;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.apache.maven.ant.tasks.support.SpecificScopesArtifactFilter;
 import org.apache.maven.ant.tasks.support.TypesArtifactFilter;
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.filter.AndArtifactFilter;
 import org.apache.maven.plugins.antrun.AntRunMojo;
 import org.apache.maven.plugins.antrun.taskconfig.DependencyFilesetsConfiguration;
@@ -56,23 +58,39 @@ public class DependencyFilesetsTask extends Task {
 
         MavenProject mavenProject = this.getProject().getReference("maven.project");
 
-        // Add filesets for dependency artifacts
+        // Add filesets for depenedency artifacts
         Set<Artifact> depArtifacts = filterArtifacts(mavenProject.getArtifacts());
 
-        Union dependenciesFileSet = new Union();
+        FileSet dependenciesFileSet = new FileSet();
         dependenciesFileSet.setProject(getProject());
+        ArtifactRepository localRepository = getProject().getReference("maven.local.repository");
+        dependenciesFileSet.setDir(new File(localRepository.getBasedir()));
+
+        if (depArtifacts.isEmpty()) {
+            // For performance reasons in case of huge local repo, tell Ant to include a single thing, otherwise the
+            // whole directory is scanned (even though ** is excluded).
+            dependenciesFileSet.createInclude().setName(".");
+            dependenciesFileSet.createExclude().setName("**");
+        }
+
+        Union dependenciesResourcesFileSet = new Union();
+        dependenciesResourcesFileSet.setProject(getProject());
 
         for (Artifact artifact : depArtifacts) {
+            String relativeArtifactPath = localRepository.pathOf(artifact);
+            dependenciesFileSet.createInclude().setName(relativeArtifactPath);
+
             String fileSetName = getPrefix() + artifact.getDependencyConflictId();
 
             FileSet singleArtifactFileSet = new FileSet();
             singleArtifactFileSet.setProject(getProject());
             singleArtifactFileSet.setFile(artifact.getFile());
-            dependenciesFileSet.add(singleArtifactFileSet);
+            dependenciesResourcesFileSet.add(singleArtifactFileSet);
             getProject().addReference(fileSetName, singleArtifactFileSet);
         }
 
         getProject().addReference((getPrefix() + getProjectDependenciesId()), dependenciesFileSet);
+        getProject().addReference((getPrefix() + getProjectDependenciesResourcesId()), dependenciesResourcesFileSet);
     }
 
     /**
@@ -148,6 +166,21 @@ public class DependencyFilesetsTask extends Task {
      */
     public void setProjectDependenciesId(String projectDependenciesId) {
         this.configuration.setProjectDependenciesId(projectDependenciesId);
+    }
+
+    /**
+     * @return RefId for the resource collection containing all project dependencies - default
+     *         maven.project.dependencies.resources
+     */
+    public String getProjectDependenciesResourcesId() {
+        return this.configuration.getProjectDependenciesResourcesId();
+    }
+
+    /**
+     * @param projectDependenciesResourcesId RefId for the resource collection containing all project dependencies
+     */
+    public void setProjectDependenciesResourcesId(String projectDependenciesResourcesId) {
+        this.configuration.setProjectDependenciesResourcesId(projectDependenciesResourcesId);
     }
 
     /**

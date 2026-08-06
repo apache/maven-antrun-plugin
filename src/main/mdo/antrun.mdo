@@ -89,6 +89,13 @@ under the License.
           <description>RefId for the fileset containing all project dependencies</description>
         </field>
         <field xml.attribute="true">
+          <name>projectDependenciesResourcesId</name>
+          <type>String</type>
+          <defaultValue>maven.project.dependencies.resources</defaultValue>
+          <description>RefId for the resource collection containing all project dependencies, resolved from the actual
+            artifact files</description>
+        </field>
+        <field xml.attribute="true">
           <name>scopes</name>
           <type>String</type>
           <description>Comma separated list of artifact scopes to include</description>

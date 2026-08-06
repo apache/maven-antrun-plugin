@@ -55,7 +55,12 @@ under the License.
 
                 <mkdir dir="target/dependencies2"/>
                 <copy todir="target/dependencies2" flatten="true">
-                  <resources refid="test.maven.project.dependencies"/>
+                  <fileset refid="test.maven.project.dependencies"/>
+                </copy>
+
+                <mkdir dir="target/dependencies3"/>
+                <copy todir="target/dependencies3" flatten="true">
+                  <resources refid="test.maven.project.dependencies.resources"/>
                 </copy>
 
               </target>

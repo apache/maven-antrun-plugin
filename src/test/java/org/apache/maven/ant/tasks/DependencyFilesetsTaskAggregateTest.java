@@ -34,6 +34,7 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.plugins.antrun.AntRunMojo;
 import org.apache.maven.project.MavenProject;
 import org.apache.tools.ant.Project;
+import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.FileResource;
@@ -42,43 +43,84 @@ import org.junit.jupiter.api.io.TempDir;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.not;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Test class for the aggregate dependency fileset of {@link DependencyFilesetsTask}.
+ * Test class for the aggregate dependency references of {@link DependencyFilesetsTask}.
  */
 class DependencyFilesetsTaskAggregateTest {
 
     private static final String LOCAL_REPOSITORY_REFID = "maven.local.repository";
 
-    private static final String DEFAULT_DEPENDENCIES_REFID = "maven.project.dependencies";
+    private static final String LEGACY_DEPENDENCIES_REFID = "maven.project.dependencies";
+
+    private static final String DEPENDENCIES_RESOURCES_REFID = "maven.project.dependencies.resources";
 
     @TempDir
     Path folder;
 
     /**
-     * The aggregate {@code maven.project.dependencies} resource collection must be assembled from the actual resolved
+     * The {@code maven.project.dependencies.resources} resource collection must be assembled from the actual resolved
      * artifact files, so that artifacts located outside the local repository (e.g. reactor inter-module dependencies)
      * are not silently omitted.
      *
      * @throws IOException In case of problems
      */
     @Test
-    void aggregateIncludesArtifactsOutsideLocalRepository() throws IOException {
+    void resourcesReferenceIncludesArtifactsOutsideLocalRepository() throws IOException {
+        Artifact localArtifact = newArtifact("org.example", "artX");
+        Artifact reactorArtifact = newArtifact("com.example", "artY");
+        DependencyFilesetsTask task = executeTask(localArtifact, reactorArtifact);
+
+        task.execute();
+
+        ResourceCollection resources =
+                (ResourceCollection) task.getProject().getReference(DEPENDENCIES_RESOURCES_REFID);
+        Set<File> files = filesOf(resources);
+        assertThat(files, hasItem(localArtifact.getFile()));
+        assertThat(files, hasItem(reactorArtifact.getFile()));
+    }
+
+    /**
+     * The legacy {@code maven.project.dependencies} reference is preserved as a fileset rooted at the local
+     * repository, so it only contains artifacts physically present there.
+     *
+     * @throws IOException In case of problems
+     */
+    @Test
+    void legacyFilesetReferenceRemainsRootedAtLocalRepository() throws IOException {
+        Artifact localArtifact = newArtifact("org.example", "artX");
+        Artifact reactorArtifact = newArtifact("com.example", "artY");
+        DependencyFilesetsTask task = executeTask(localArtifact, reactorArtifact);
+
+        task.execute();
+
+        Object reference = task.getProject().getReference(LEGACY_DEPENDENCIES_REFID);
+        assertTrue(reference instanceof FileSet);
+        Set<File> files = filesOf((ResourceCollection) reference);
+        assertThat(files, hasItem(localArtifact.getFile()));
+        assertThat(files, not(hasItem(reactorArtifact.getFile())));
+    }
+
+    private DependencyFilesetsTask executeTask(Artifact localArtifact, Artifact reactorArtifact) throws IOException {
         Path localRepositoryDir = Files.createDirectories(folder.resolve("local-repository"));
         Path reactorDirectory = Files.createDirectories(folder.resolve("reactor-module"));
 
         File localArtifactFile =
-                localRepositoryDir.resolve("org/example/artX/1.0/artX-1.0.jar").toFile();
+                localRepositoryDir.resolve(artifactPath(localArtifact)).toFile();
         Files.createDirectories(localArtifactFile.getParentFile().toPath());
         Files.write(localArtifactFile.toPath(), new byte[0]);
+        localArtifact.setFile(localArtifactFile);
 
         File reactorArtifactFile = reactorDirectory.resolve("artY-1.0.jar").toFile();
         Files.write(reactorArtifactFile.toPath(), new byte[0]);
+        reactorArtifact.setFile(reactorArtifactFile);
 
         MavenProject mavenProject = new MavenProject();
         Set<Artifact> artifacts = new HashSet<>();
-        artifacts.add(newArtifact("org.example", "artX", localArtifactFile));
-        artifacts.add(newArtifact("com.example", "artY", reactorArtifactFile));
+        artifacts.add(localArtifact);
+        artifacts.add(reactorArtifact);
         mavenProject.setArtifacts(artifacts);
 
         Project antProject = new Project();
@@ -87,22 +129,21 @@ class DependencyFilesetsTaskAggregateTest {
 
         DependencyFilesetsTask task = new DependencyFilesetsTask();
         task.setProject(antProject);
-
-        task.execute();
-
-        ResourceCollection aggregate = (ResourceCollection) antProject.getReference(DEFAULT_DEPENDENCIES_REFID);
-        Set<File> files = new HashSet<>();
-        for (Resource resource : aggregate) {
-            files.add(((FileResource) resource).getFile());
-        }
-        assertThat(files, hasItem(localArtifactFile));
-        assertThat(files, hasItem(reactorArtifactFile));
+        return task;
     }
 
-    private Artifact newArtifact(String groupId, String artifactId, File file) {
+    private Set<File> filesOf(ResourceCollection resources) {
+        Set<File> files = new HashSet<>();
+        for (Resource resource : resources) {
+            files.add(((FileResource) resource).getFile());
+        }
+        return files;
+    }
+
+    private Artifact newArtifact(String groupId, String artifactId) throws IOException {
         Artifact artifact = new DefaultArtifact(
                 groupId, artifactId, "1.0", Artifact.SCOPE_COMPILE, "jar", null, new DefaultArtifactHandler("jar"));
-        artifact.setFile(file);
+        artifact.setFile(Files.createTempFile(folder, artifactId, ".jar").toFile());
         return artifact;
     }
 

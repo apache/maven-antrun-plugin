@@ -35,11 +35,15 @@ DependencyFilesets Task
   <<<[prefix]groupId:artifactId:[classifier]:type>>>.  A junit jar dependency
   gets the fileset ID <<<junit:junit:jar>>>.
   
-  The task also creates a resource collection with all the project
-  dependencies.  The resource collection uses the default ID maven.project.dependencies.
-  It is assembled from the actual resolved artifact files, so artifacts located
-  outside the local repository (for example reactor inter-module dependencies)
-  are included as well.
+  The task also creates a reference with all the project dependencies.  The
+  reference <<<maven.project.dependencies>>> is a fileset rooted at the local
+  repository.  It only contains dependencies that are physically stored in the
+  local repository.  Dependencies that are resolved from elsewhere, for example
+  reactor modules built in the same build, are not part of this fileset.
+  To include the resolved artifact files of all project dependencies, use the
+  <<<maven.project.dependencies.resources>>> reference.  It is a resource
+  collection that contains the actual artifact file of every project dependency,
+  wherever it was resolved from.
 
 * Task Parameters
 
@@ -48,7 +52,9 @@ DependencyFilesets Task
 *---------------+--------------------------------------------------------+-----------------------------------*
 | prefix        | String to prepend to all fileset IDs                   | No. Defaults to empty string      |
 *---------------+--------------------------------------------------------+-----------------------------------*
-| projectDependenciesId  | RefId for the resource collection with all project dependencies  | No. Defaults to maven.project.dependencies    |
+| projectDependenciesId  | RefId for the fileset with all project dependencies  | No. Defaults to maven.project.dependencies    |
+*---------------+--------------------------------------------------------+-----------------------------------*
+| projectDependenciesResourcesId  | RefId for the resource collection with the resolved artifact files of all project dependencies  | No. Defaults to maven.project.dependencies.resources    |
 *---------------+--------------------------------------------------------+-----------------------------------*
 | scopes        | Comma separated list of artifact scopes to include     | No. Defaults to all artifacts     |
 *---------------+--------------------------------------------------------+-----------------------------------*
@@ -59,7 +65,7 @@ DependencyFilesets Task
 * Example
 
   This example shows how to access individual dependencies and the combined
-  dependency fileset.
+  dependency references.
 
 +---+
       <plugin>
@@ -85,7 +91,12 @@ DependencyFilesets Task
 
                 <mkdir dir="target/dependencies2"/>
                 <copy todir="target/dependencies2" flatten="true">
-                  <resources refid="mydeps.maven.project.dependencies"/>
+                  <fileset refid="mydeps.maven.project.dependencies"/>
+                </copy>
+
+                <mkdir dir="target/dependencies3"/>
+                <copy todir="target/dependencies3" flatten="true">
+                  <resources refid="mydeps.maven.project.dependencies.resources"/>
                 </copy>
 
               </target>
