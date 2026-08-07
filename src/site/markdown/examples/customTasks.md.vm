@@ -1,38 +1,34 @@
- ------
- Using tasks not included in Ant's default jar
- ------
- Carlos Sanchez
- ------
- 2008-07-15
- ------
+---
+title: Using tasks not included in Ant's default jar
+author: 
+  - Carlos Sanchez
+date: 2008-07-15
+---
 
- ~~ Licensed to the Apache Software Foundation (ASF) under one
- ~~ or more contributor license agreements.  See the NOTICE file
- ~~ distributed with this work for additional information
- ~~ regarding copyright ownership.  The ASF licenses this file
- ~~ to you under the Apache License, Version 2.0 (the
- ~~ "License"); you may not use this file except in compliance
- ~~ with the License.  You may obtain a copy of the License at
- ~~
- ~~   http://www.apache.org/licenses/LICENSE-2.0
- ~~
- ~~ Unless required by applicable law or agreed to in writing,
- ~~ software distributed under the License is distributed on an
- ~~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- ~~ KIND, either express or implied.  See the License for the
- ~~ specific language governing permissions and limitations
- ~~ under the License.
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
 
- ~~ NOTE: For help with the syntax of this file, see:
- ~~ https://maven.apache.org/doxia/references/apt-format.html
+http://www.apache.org/licenses/LICENSE-2.0
 
-Using tasks not included in Ant's default jar
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
 
-  To use Ant tasks that are not in the Ant jar, add the task dependencies to
-  the plugin classpath.  Use the <<<maven.plugin.classpath>>> reference if
-  needed.
+# Using tasks not included in Ant's default jar
 
-+---+
+To use Ant tasks that are not in the Ant jar, add the task dependencies to the plugin classpath. Use the `maven.plugin.classpath` reference if needed.
+
+```xml
 <project>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>my-test-app</artifactId>
@@ -53,7 +49,7 @@ Using tasks not included in Ant's default jar
               <target>
 
                 <ftp action="send" server="myhost" remotedir="/home/test" userid="x" password="y" depends="yes" verbose="yes">
-                  <fileset dir="\${project.build.directory}">
+                  <fileset dir="${esc.d}{project.build.directory}">
                     <include name="*.jar" />
                   </fileset>
                 </ftp>
@@ -79,11 +75,11 @@ Using tasks not included in Ant's default jar
     </plugins>
   </build>
 </project>
-+---+
+```
 
-  Another example uses the {{{http://ant-contrib.sourceforge.net/}Ant-Contrib}} tasks:
+Another example uses the [Ant-Contrib](http://ant-contrib.sourceforge.net/) tasks:
 
-+---+
+```xml
 <project>
   [...]
   <build>
@@ -125,4 +121,4 @@ Using tasks not included in Ant's default jar
     </plugins>
   </build>
 </project>
-+---+
+```

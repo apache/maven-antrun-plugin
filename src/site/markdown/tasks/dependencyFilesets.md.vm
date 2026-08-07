@@ -1,0 +1,80 @@
+---
+title: DependencyFileSets Task
+author: 
+  - Paul Gier
+date: 2010-03-19
+---
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+# DependencyFilesets Task
+
+This task creates fileset objects that contain the Maven project dependencies. You can use the task to access a specific dependency artifact. You can also use the task to operate on a set of dependency artifacts. Each artifact gets a fileset ID in the form `[prefix]groupId:artifactId:[classifier]:type`. A junit jar dependency gets the fileset ID `junit:junit:jar`.
+
+The task also creates a fileset with all the project dependencies. The fileset uses the default ID maven.project.dependencies.
+
+Task Parameters
+---------------
+
+|Attribute|Description|Required|
+|:---|:---|:---:|
+|prefix|String to prepend to all fileset IDs|No. Defaults to empty string|
+|projectDependenciesId|RefId for the fileset with all project dependencies|No. Defaults to maven.project.dependencies|
+|scopes|Comma separated list of artifact scopes to include|No. Defaults to all artifacts|
+|types|Comma separated list of artifact types to include|No. Defaults to all artifacts|
+
+Example
+-------
+
+This example shows how to access individual dependencies and the combined dependency fileset.
+
+```xml
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>${project.version}</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+
+                <dependencyfilesets prefix="mydeps."/>
+                <mkdir dir="target/dependencies"/>
+                <copy todir="target/dependencies">
+                  <fileset refid="mydeps.junit:junit:jar"/>
+                  <fileset refid="mydeps.org.apache.ant:ant:jar"/>
+                </copy>
+
+                <mkdir dir="target/dependencies2"/>
+                <copy todir="target/dependencies2" flatten="true">
+                  <fileset refid="mydeps.maven.project.dependencies"/>
+                </copy>
+
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+```
