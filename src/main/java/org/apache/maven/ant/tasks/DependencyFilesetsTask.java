@@ -33,6 +33,7 @@ import org.apache.maven.project.MavenProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
+import org.apache.tools.ant.types.resources.Union;
 
 /**
  * Ant task which create a fileset for each dependency in a Maven project, and a
@@ -72,6 +73,9 @@ public class DependencyFilesetsTask extends Task {
             dependenciesFileSet.createExclude().setName("**");
         }
 
+        Union dependenciesResourcesFileSet = new Union();
+        dependenciesResourcesFileSet.setProject(getProject());
+
         for (Artifact artifact : depArtifacts) {
             String relativeArtifactPath = localRepository.pathOf(artifact);
             dependenciesFileSet.createInclude().setName(relativeArtifactPath);
@@ -81,10 +85,12 @@ public class DependencyFilesetsTask extends Task {
             FileSet singleArtifactFileSet = new FileSet();
             singleArtifactFileSet.setProject(getProject());
             singleArtifactFileSet.setFile(artifact.getFile());
+            dependenciesResourcesFileSet.add(singleArtifactFileSet);
             getProject().addReference(fileSetName, singleArtifactFileSet);
         }
 
         getProject().addReference((getPrefix() + getProjectDependenciesId()), dependenciesFileSet);
+        getProject().addReference((getPrefix() + getProjectDependenciesResourcesId()), dependenciesResourcesFileSet);
     }
 
     /**
@@ -160,6 +166,21 @@ public class DependencyFilesetsTask extends Task {
      */
     public void setProjectDependenciesId(String projectDependenciesId) {
         this.configuration.setProjectDependenciesId(projectDependenciesId);
+    }
+
+    /**
+     * @return RefId for the resource collection containing all project dependencies - default
+     *         maven.project.dependencies.resources
+     */
+    public String getProjectDependenciesResourcesId() {
+        return this.configuration.getProjectDependenciesResourcesId();
+    }
+
+    /**
+     * @param projectDependenciesResourcesId RefId for the resource collection containing all project dependencies
+     */
+    public void setProjectDependenciesResourcesId(String projectDependenciesResourcesId) {
+        this.configuration.setProjectDependenciesResourcesId(projectDependenciesResourcesId);
     }
 
     /**
