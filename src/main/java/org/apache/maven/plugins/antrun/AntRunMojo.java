@@ -431,8 +431,13 @@ public class AntRunMojo extends AbstractMojo {
         Set<Artifact> depArtifacts = mavenProject.getArtifacts();
         for (Artifact artifact : depArtifacts) {
             String propName = artifact.getDependencyConflictId();
+            File artifactFile = artifact.getFile();
+            if (artifactFile == null) {
+                getLog().warn("Dependency artifact has no resolved file, skipping property: " + propName);
+                continue;
+            }
 
-            antProject.setProperty(propertyPrefix + propName, artifact.getFile().getPath());
+            antProject.setProperty(propertyPrefix + propName, artifactFile.getPath());
         }
 
         // Add a property containing the list of versions for the mapper
