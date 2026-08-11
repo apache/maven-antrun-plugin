@@ -68,8 +68,7 @@ public class AttachArtifactTask extends Task {
             type = FileUtils.getExtension(file.getName());
         }
 
-        MavenProject mavenProject =
-                ((MavenAntRunProject) this.getProject().getReference(mavenProjectRefId)).getMavenProject();
+        MavenProject mavenProject = getMavenProject();
 
         if (this.getProject().getReference(mavenProjectHelperRefId) == null) {
             throw new BuildException("Maven project helper reference not found: " + mavenProjectHelperRefId);
@@ -79,6 +78,25 @@ public class AttachArtifactTask extends Task {
         log("Attaching " + file + " as an attached artifact", Project.MSG_VERBOSE);
         MavenProjectHelper projectHelper = getProject().getReference(mavenProjectHelperRefId);
         projectHelper.attachArtifact(mavenProject, type, classifier, file);
+    }
+
+    /**
+     * Resolves the Maven project from the configured reference, unwrapping the {@link MavenAntRunProject} wrapper if
+     * present. The reference may hold either a {@link MavenProject} or a {@link MavenAntRunProject}; any other type is
+     * rejected with a {@link BuildException}.
+     *
+     * @return the Maven project held by the reference
+     */
+    private MavenProject getMavenProject() {
+        Object reference = this.getProject().getReference(mavenProjectRefId);
+        if (reference instanceof MavenAntRunProject) {
+            return ((MavenAntRunProject) reference).getMavenProject();
+        }
+        if (reference instanceof MavenProject) {
+            return (MavenProject) reference;
+        }
+        throw new BuildException(
+                "Maven project reference is not a MavenProject or MavenAntRunProject: " + mavenProjectRefId);
     }
 
     /**
