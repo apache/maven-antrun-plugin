@@ -429,11 +429,7 @@ public class AntRunMojo extends AbstractMojo {
 
         // Add properties for dependency artifacts
         Set<Artifact> depArtifacts = mavenProject.getArtifacts();
-        for (Artifact artifact : depArtifacts) {
-            String propName = artifact.getDependencyConflictId();
-
-            antProject.setProperty(propertyPrefix + propName, artifact.getFile().getPath());
-        }
+        setDependencyFileProperties(depArtifacts, antProject);
 
         // Add a property containing the list of versions for the mapper
         StringBuilder versionsBuffer = new StringBuilder();
@@ -441,6 +437,37 @@ public class AntRunMojo extends AbstractMojo {
             versionsBuffer.append(artifact.getVersion()).append(File.pathSeparator);
         }
         antProject.setProperty(versionsPropertyName, versionsBuffer.toString());
+    }
+
+    /**
+     * Registers one <code>${propertyPrefix}${dependencyConflictId}</code> property per dependency,
+     * holding the path to that dependency's artifact file.
+     * <p>
+     * An artifact's file may be <code>null</code> when it was never resolved, for instance under
+     * partial or offline resolution. Such dependencies are skipped with a warning naming them,
+     * rather than aborting the build: the property is simply absent, so a build that never
+     * references it still runs.
+     *
+     * @param depArtifacts the project's dependency artifacts, may be null
+     * @param antProject the Ant project to set properties on, not null
+     */
+    void setDependencyFileProperties(Set<Artifact> depArtifacts, Project antProject) {
+        if (depArtifacts == null) {
+            return;
+        }
+
+        for (Artifact artifact : depArtifacts) {
+            String propName = artifact.getDependencyConflictId();
+
+            File artifactFile = artifact.getFile();
+            if (artifactFile == null) {
+                getLog().warn("Not setting property \"" + propertyPrefix + propName + "\": dependency "
+                        + artifact.getId() + " has no resolved artifact file.");
+                continue;
+            }
+
+            antProject.setProperty(propertyPrefix + propName, artifactFile.getPath());
+        }
     }
 
     /**
