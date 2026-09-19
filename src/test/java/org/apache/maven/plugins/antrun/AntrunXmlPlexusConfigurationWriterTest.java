@@ -28,10 +28,11 @@ import org.codehaus.plexus.configuration.xml.XmlPlexusConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.builder.Input;
+import org.xmlunit.diff.Diff;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.xmlunit.matchers.CompareMatcher.isIdenticalTo;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * Test class for {@link AntrunXmlPlexusConfigurationWriter}.
@@ -114,6 +115,10 @@ class AntrunXmlPlexusConfigurationWriterTest {
     }
 
     private void assertXmlIsExpected(String expected, File file) {
-        assertThat(Input.from(file), isIdenticalTo(Input.from(getClass().getResourceAsStream(expected))));
+        Diff diff = DiffBuilder.compare(Input.from(getClass().getResourceAsStream(expected)))
+                .withTest(Input.from(file))
+                .checkForIdentical()
+                .build();
+        assertFalse(diff.hasDifferences(), diff.toString());
     }
 }
