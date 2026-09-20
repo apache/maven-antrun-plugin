@@ -20,11 +20,11 @@
 
 import java.io.*;
 
-String[] expectedFiles = {
+String[] expectedFiles = [
     "org/apache/maven/plugins/antrun/attach-artifact-from-ant-task/1.0/attach-artifact-from-ant-task-1.0.pom",
     "org/apache/maven/plugins/antrun/attach-artifact-from-ant-task/1.0/attach-artifact-from-ant-task-1.0-from-pom.txt",
     "org/apache/maven/plugins/antrun/attach-artifact-from-ant-task/1.0/attach-artifact-from-ant-task-1.0-from-build.txt"
-};
+];
 
 for ( String expectedFile : expectedFiles )
 {
