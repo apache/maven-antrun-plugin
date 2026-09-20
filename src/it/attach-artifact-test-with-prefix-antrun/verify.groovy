@@ -20,10 +20,10 @@
 
 import java.io.*;
 
-String[] expectedFiles = {
+String[] expectedFiles = [
     "org/apache/maven/plugins/antrun/attach-artifact-test-with-prefix/1.0/attach-artifact-test-with-prefix-1.0.pom",
     "org/apache/maven/plugins/antrun/attach-artifact-test-with-prefix/1.0/attach-artifact-test-with-prefix-1.0-cl.txt"
-};
+];
 
 for ( String expectedFile : expectedFiles )
 {
