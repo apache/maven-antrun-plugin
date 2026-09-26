@@ -55,7 +55,7 @@ public class DependencyFilesetsTask extends Task {
             throw new BuildException("Maven project reference not found: " + mavenProjectId);
         }
 
-        MavenProject mavenProject = this.getProject().getReference("maven.project");
+        MavenProject mavenProject = this.getProject().getReference(mavenProjectId);
 
         // Add filesets for depenedency artifacts
         Set<Artifact> depArtifacts = filterArtifacts(mavenProject.getArtifacts());
