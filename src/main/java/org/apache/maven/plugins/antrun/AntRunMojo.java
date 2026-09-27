@@ -444,14 +444,13 @@ public class AntRunMojo extends AbstractMojo {
      * holding the path to that dependency's artifact file.
      * <p>
      * An artifact's file may be <code>null</code> when it was never resolved, for instance under
-     * partial or offline resolution. Such dependencies are skipped with a warning naming them,
-     * rather than aborting the build: the property is simply absent, so a build that never
-     * references it still runs.
+     * partial or offline resolution. Such dependencies are skipped with a warning that names them.
+     * The build is not aborted; the property is simply absent.
      *
      * @param depArtifacts the project's dependency artifacts, may be null
      * @param antProject the Ant project to set properties on, not null
      */
-    void setDependencyFileProperties(Set<Artifact> depArtifacts, Project antProject) {
+    private void setDependencyFileProperties(Set<Artifact> depArtifacts, Project antProject) {
         if (depArtifacts == null) {
             return;
         }
@@ -463,10 +462,9 @@ public class AntRunMojo extends AbstractMojo {
             if (artifactFile == null) {
                 getLog().warn("Not setting property \"" + propertyPrefix + propName + "\": dependency "
                         + artifact.getId() + " has no resolved artifact file.");
-                continue;
+            } else {
+                antProject.setProperty(propertyPrefix + propName, artifactFile.getPath());
             }
-
-            antProject.setProperty(propertyPrefix + propName, artifactFile.getPath());
         }
     }
 

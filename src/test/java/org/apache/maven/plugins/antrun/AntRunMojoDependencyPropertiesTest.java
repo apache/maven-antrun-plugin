@@ -20,6 +20,7 @@ package org.apache.maven.plugins.antrun;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -52,6 +53,13 @@ class AntRunMojoDependencyPropertiesTest {
         return mojo;
     }
 
+    private static void setDependencyFileProperties(AntRunMojo mojo, Set<Artifact> artifacts, Project antProject)
+            throws Exception {
+        Method method = AntRunMojo.class.getDeclaredMethod("setDependencyFileProperties", Set.class, Project.class);
+        method.setAccessible(true);
+        method.invoke(mojo, artifacts, antProject);
+    }
+
     private static Artifact artifact(String artifactId, File file) {
         Artifact artifact = new DefaultArtifact(
                 "org.example",
@@ -73,7 +81,7 @@ class AntRunMojoDependencyPropertiesTest {
         Project antProject = new Project();
         AntRunMojo mojo = mojoWithEmptyPrefix();
 
-        assertDoesNotThrow(() -> mojo.setDependencyFileProperties(artifacts, antProject));
+        assertDoesNotThrow(() -> setDependencyFileProperties(mojo, artifacts, antProject));
         assertNull(
                 antProject.getProperty("org.example:unresolved:jar"),
                 "no path property should be set for a dependency with no artifact file");
@@ -90,10 +98,10 @@ class AntRunMojoDependencyPropertiesTest {
         Project antProject = new Project();
         AntRunMojo mojo = mojoWithEmptyPrefix();
 
-        mojo.setDependencyFileProperties(artifacts, antProject);
+        setDependencyFileProperties(mojo, artifacts, antProject);
 
         // The unresolved artifact is listed first, so this also proves one bad
-        // dependency no longer prevents the rest from being registered.
+        // dependency does not prevent the rest from being registered.
         assertEquals(
                 resolved.getPath(),
                 antProject.getProperty("org.example:resolved:jar"),
@@ -105,6 +113,6 @@ class AntRunMojoDependencyPropertiesTest {
         Project antProject = new Project();
         AntRunMojo mojo = mojoWithEmptyPrefix();
 
-        assertDoesNotThrow(() -> mojo.setDependencyFileProperties(null, antProject));
+        assertDoesNotThrow(() -> setDependencyFileProperties(mojo, null, antProject));
     }
 }
