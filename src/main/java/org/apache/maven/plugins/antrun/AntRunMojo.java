@@ -19,10 +19,16 @@
 package org.apache.maven.plugins.antrun;
 
 import javax.inject.Inject;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
@@ -50,7 +56,6 @@ import org.apache.tools.ant.ProjectHelper;
 import org.apache.tools.ant.taskdefs.Typedef;
 import org.apache.tools.ant.types.Path;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
-import org.codehaus.plexus.util.ReaderFactory;
 
 /**
  * <p>
@@ -525,8 +530,7 @@ public class AntRunMojo extends AbstractMojo {
 
     /**
      * @param buildException not null
-     * @return the fragment XML part where the buildException occurs.
-     * @since 1.7
+     * @return a fragment of XML from the place in the ant build.xml where the buildException occurs
      */
     private String findFragment(BuildException buildException) {
         if (buildException == null
@@ -540,16 +544,23 @@ public class AntRunMojo extends AbstractMojo {
             return null;
         }
 
-        try (LineNumberReader reader = new LineNumberReader(ReaderFactory.newXmlReader(antFile))) {
-            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-                if (reader.getLineNumber() == buildException.getLocation().getLineNumber()) {
-                    return "around Ant part ..." + line.trim() + "... @ "
-                            + buildException.getLocation().getLineNumber() + ":"
-                            + buildException.getLocation().getColumnNumber() + " in " + antFile.getAbsolutePath();
+        XMLInputFactory factory = XMLInputFactory.newFactory();
+        try (InputStream in = Files.newInputStream(antFile.toPath())) {
+            XMLStreamReader xmlReader = factory.createXMLStreamReader(in);
+            String encoding = xmlReader.getEncoding();
+            xmlReader.close();
+            try (LineNumberReader reader =
+                    new LineNumberReader(new InputStreamReader(Files.newInputStream(antFile.toPath()), encoding))) {
+                for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+                    if (reader.getLineNumber() == buildException.getLocation().getLineNumber()) {
+                        return "around Ant part ..." + line.trim() + "... @ "
+                                + buildException.getLocation().getLineNumber() + ":"
+                                + buildException.getLocation().getColumnNumber() + " in " + antFile.getAbsolutePath();
+                    }
                 }
             }
-        } catch (Exception e) {
-            getLog().debug(e.getMessage(), e);
+        } catch (IOException | XMLStreamException ex) {
+            getLog().debug(ex.getMessage(), ex);
         }
 
         return null;
