@@ -33,7 +33,6 @@ import java.util.Set;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
-import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -51,6 +50,8 @@ import org.apache.tools.ant.taskdefs.Typedef;
 import org.apache.tools.ant.types.Path;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 import org.codehaus.plexus.util.ReaderFactory;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.repository.LocalRepository;
 
 /**
  * <p>
@@ -130,10 +131,19 @@ public class AntRunMojo extends AbstractMojo {
     private List<Artifact> pluginArtifacts;
 
     /**
-     * The local Maven repository
+     * The repository system session, used to locate the local Maven repository.
      */
-    @Parameter(property = "localRepository", readonly = true)
-    protected ArtifactRepository localRepository;
+    @Parameter(defaultValue = "${repositorySystemSession}", readonly = true)
+    protected RepositorySystemSession repositorySystemSession;
+
+    /**
+     * The local Maven repository
+     *
+     * @since 3.2.1
+     */
+    protected LocalRepository getLocalRepository() {
+        return repositorySystemSession.getLocalRepository();
+    }
 
     /**
      * String to prepend to project and dependency property names.
@@ -350,7 +360,9 @@ public class AntRunMojo extends AbstractMojo {
         antProject.addReference(DEFAULT_MAVEN_PROJECT_REFID, mavenProject);
         antProject.addReference(DEFAULT_MAVEN_PROJECT_REF_REFID, new MavenAntRunProject(mavenProject));
         antProject.addReference(DEFAULT_MAVEN_PROJECT_HELPER_REFID, projectHelper);
-        antProject.addReference(MAVEN_REFID_PREFIX + "local.repository", localRepository);
+        antProject.addReference(MAVEN_REFID_PREFIX + "local.repository", getLocalRepository());
+        antProject.addReference(
+                MAVEN_REFID_PREFIX + "local.repository.manager", repositorySystemSession.getLocalRepositoryManager());
     }
 
     /**
@@ -424,8 +436,12 @@ public class AntRunMojo extends AbstractMojo {
         antProject.setProperty(
                 (propertyPrefix + "project.build.testSourceDirectory"),
                 mavenProject.getBuild().getTestSourceDirectory());
-        antProject.setProperty((propertyPrefix + "localRepository"), localRepository.toString());
-        antProject.setProperty((propertyPrefix + "settings.localRepository"), localRepository.getBasedir());
+        antProject.setProperty(
+                (propertyPrefix + "localRepository"),
+                getLocalRepository().getBasedir().getAbsolutePath());
+        antProject.setProperty(
+                (propertyPrefix + "settings.localRepository"),
+                getLocalRepository().getBasedir().getAbsolutePath());
 
         // Add properties for dependency artifacts
         Set<Artifact> depArtifacts = mavenProject.getArtifacts();
