@@ -40,16 +40,20 @@ public class VersionMapper implements FileNameMapper, Comparator<String> {
     public String[] mapFileName(String sourceFileName) {
         String originalFileName = new File(sourceFileName).getName();
         for (String version : versions) {
-            int index = originalFileName.indexOf(version);
-            if (index >= 0) {
-                // remove version in artifactId-version(-classifier).type
-                String baseFilename = originalFileName.substring(0, index - 1);
-                String extension = originalFileName.substring(index + version.length());
-                String path = sourceFileName.substring(0, sourceFileName.length() - originalFileName.length());
-                if ("flatten".equals(to)) {
-                    path = "";
+            int index = originalFileName.lastIndexOf('-' + version);
+            while (index >= 0) {
+                // only strip a trailing -<version> segment, followed by the file extension, by a
+                // -<classifier> segment, or by nothing
+                String suffix = originalFileName.substring(index + version.length() + 1);
+                if (suffix.isEmpty() || suffix.startsWith(".") || suffix.startsWith("-")) {
+                    String baseFilename = originalFileName.substring(0, index);
+                    String path = sourceFileName.substring(0, sourceFileName.length() - originalFileName.length());
+                    if ("flatten".equals(to)) {
+                        path = "";
+                    }
+                    return new String[] {path + baseFilename + suffix};
                 }
-                return new String[] {path + baseFilename + extension};
+                index = originalFileName.lastIndexOf('-' + version, index - 1);
             }
         }
         return new String[] {sourceFileName};
