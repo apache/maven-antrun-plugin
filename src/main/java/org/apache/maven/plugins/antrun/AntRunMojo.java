@@ -242,6 +242,17 @@ public class AntRunMojo extends AbstractMojo {
     private boolean failOnError;
 
     /**
+     * Prefixes output from forked Ant processes with the owning Maven thread name when Maven runs in parallel.
+     * To show the thread in the Maven log, configure the Maven installation's
+     * {@code conf/logging/simplelogger.properties} option:
+     * {@code org.slf4j.simpleLogger.showThreadName=true}.
+     *
+     * @since 3.3.0
+     */
+    @Parameter(property = "maven.antrun.includeMavenThreadName", defaultValue = "false")
+    private boolean includeMavenThreadName;
+
+    /**
      * The Maven project helper object
      */
     private MavenProjectHelper projectHelper;
@@ -321,7 +332,7 @@ public class AntRunMojo extends AbstractMojo {
     }
 
     private DefaultLogger getConfiguredBuildLogger() {
-        DefaultLogger antLogger = new MavenLogger(getLog());
+        DefaultLogger antLogger = new MavenLogger(getLog(), includeMavenThreadName && session.isParallel());
         if (getLog().isDebugEnabled()) {
             antLogger.setMessageOutputLevel(Project.MSG_DEBUG);
         } else if (getLog().isInfoEnabled()) {
