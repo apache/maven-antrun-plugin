@@ -21,6 +21,7 @@ package org.apache.maven.plugins.antrun;
 import java.io.PrintStream;
 
 import org.apache.maven.plugin.logging.Log;
+import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.DefaultLogger;
 import org.apache.tools.ant.Project;
 
@@ -30,9 +31,48 @@ import org.apache.tools.ant.Project;
 public class MavenLogger extends DefaultLogger {
 
     private final Log log;
+    private final Thread ownerThread;
+    private final String ownerThreadName;
+    private final boolean includeOwnerThreadName;
 
+    /**
+     * Creates a logger that forwards Ant messages to Maven without adding an owner-thread prefix.
+     *
+     * @param log the Maven logger
+     */
     public MavenLogger(Log log) {
+        this(log, false);
+    }
+
+    /**
+     * Creates a logger that forwards Ant messages to Maven.
+     *
+     * @param log the Maven logger
+     * @param includeOwnerThreadName whether to prefix messages emitted by Ant worker threads with the owning Maven
+     *                              thread name
+     * @since 3.3.0
+     */
+    public MavenLogger(Log log, boolean includeOwnerThreadName) {
         this.log = log;
+        this.ownerThread = Thread.currentThread();
+        this.ownerThreadName = ownerThread.getName();
+        this.includeOwnerThreadName = includeOwnerThreadName;
+    }
+
+    @Override
+    public void messageLogged(BuildEvent event) {
+        String message = event.getMessage();
+        boolean prefixMessage = includeOwnerThreadName && message != null && Thread.currentThread() != ownerThread;
+        if (prefixMessage) {
+            event.setMessage("[" + ownerThreadName + "] " + message, event.getPriority());
+        }
+        try {
+            super.messageLogged(event);
+        } finally {
+            if (prefixMessage) {
+                event.setMessage(message, event.getPriority());
+            }
+        }
     }
 
     @Override
