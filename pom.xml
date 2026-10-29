@@ -35,7 +35,7 @@ under the License.
   <description>Runs Ant scripts embedded in the POM</description>
 
   <prerequisites>
-    <maven>3.6.3</maven>
+    <maven>3.9.0</maven>
   </prerequisites>
 
   <scm>
