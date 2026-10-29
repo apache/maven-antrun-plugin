@@ -49,8 +49,8 @@ under the License.
     <url>https://github.com/apache/maven-antrun-plugin/issues</url>
   </issueManagement>
   <ciManagement>
-    <system>Jenkins</system>
-    <url>https://ci-maven.apache.org/job/Maven/job/maven-box/job/maven-antrun-plugin/</url>
+    <system>GitHub</system>
+    <url>https://github.com/apache/maven-antrun-plugin/actions</url>
   </ciManagement>
   <distributionManagement>
     <site>
