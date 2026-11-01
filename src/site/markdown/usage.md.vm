@@ -86,7 +86,7 @@ You can specify Ant [`<target/>`](http://ant.apache.org/manual/using.html#target
     -->
 
   </target>
-<configuration>
+</configuration>
 [...]
 ```
 
