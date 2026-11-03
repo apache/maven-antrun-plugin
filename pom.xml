@@ -60,6 +60,10 @@ under the License.
   </distributionManagement>
 
   <properties>
+    <!-- the JUnit version maven-parent 50 manages -->
+    <versions.junit>5.14.4</versions.junit>
+    <!-- the name maven-parent 50 and older read; remove with the parent update -->
+    <versions.junit5>${versions.junit}</versions.junit5>
     <mavenVersion>3.10.0</mavenVersion>
     <resolverVersion>2.0.24</resolverVersion>
     <version.xmlunit>2.14.0</version.xmlunit>
@@ -216,7 +220,7 @@ under the License.
         <artifactId>maven-invoker-plugin</artifactId>
         <configuration>
           <scriptVariables>
-            <scriptVarVersionJunit>${versions.junit5}</scriptVarVersionJunit>
+            <scriptVarVersionJunit>${versions.junit}</scriptVarVersionJunit>
             <scriptVarVersionAnt>${version.ant}</scriptVarVersionAnt>
           </scriptVariables>
         </configuration>
