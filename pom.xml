@@ -64,8 +64,8 @@ under the License.
     <versions.junit>5.14.4</versions.junit>
     <!-- the name maven-parent 50 and older read; remove with the parent update -->
     <versions.junit5>${versions.junit}</versions.junit5>
-    <mavenVersion>3.10.0</mavenVersion>
-    <resolverVersion>2.0.24</resolverVersion>
+    <mavenVersion>3.9.16</mavenVersion>
+    <resolverVersion>1.9.27</resolverVersion>
     <version.xmlunit>2.14.0</version.xmlunit>
     <version.ant>1.10.18</version.ant>
 
