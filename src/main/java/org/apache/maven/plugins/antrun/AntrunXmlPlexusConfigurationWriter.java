@@ -50,8 +50,7 @@ class AntrunXmlPlexusConfigurationWriter {
             throws IOException {
         MXSerializer serializer = new MXSerializer();
         serializer.setProperty(
-                "http://xmlpull.org/v1/doc/properties.html#serializer-line-separator",
-                System.getProperty("line.separator"));
+                "http://xmlpull.org/v1/doc/properties.html#serializer-line-separator", System.lineSeparator());
         serializer.setProperty("http://xmlpull.org/v1/doc/properties.html#serializer-indentation", "  ");
         try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file))) {
             serializer.setOutput(bos, AntRunMojo.UTF_8);
