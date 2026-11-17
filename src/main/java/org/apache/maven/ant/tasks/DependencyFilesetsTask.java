@@ -87,7 +87,7 @@ public class DependencyFilesetsTask extends Task {
             getProject().addReference(fileSetName, singleArtifactFileSet);
         }
 
-        getProject().addReference((getPrefix() + getProjectDependenciesId()), dependenciesFileSet);
+        getProject().addReference(getPrefix() + getProjectDependenciesId(), dependenciesFileSet);
     }
 
     /**

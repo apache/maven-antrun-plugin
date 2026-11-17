@@ -82,6 +82,6 @@ public class VersionMapper implements FileNameMapper, Comparator<String> {
     @Override
     public int compare(String s1, String s2) {
         int lengthDiff = s2.length() - s1.length();
-        return (lengthDiff != 0) ? lengthDiff : s1.compareTo(s2);
+        return lengthDiff != 0 ? lengthDiff : s1.compareTo(s2);
     }
 }
