@@ -413,34 +413,34 @@ public class AntRunMojo extends AbstractMojo {
 
         // Add some of the common Maven properties
         getLog().debug("Setting properties with prefix: " + propertyPrefix);
-        antProject.setProperty((propertyPrefix + "project.groupId"), mavenProject.getGroupId());
-        antProject.setProperty((propertyPrefix + "project.artifactId"), mavenProject.getArtifactId());
-        antProject.setProperty((propertyPrefix + "project.name"), mavenProject.getName());
+        antProject.setProperty(propertyPrefix + "project.groupId", mavenProject.getGroupId());
+        antProject.setProperty(propertyPrefix + "project.artifactId", mavenProject.getArtifactId());
+        antProject.setProperty(propertyPrefix + "project.name", mavenProject.getName());
         if (mavenProject.getDescription() != null) {
-            antProject.setProperty((propertyPrefix + "project.description"), mavenProject.getDescription());
+            antProject.setProperty(propertyPrefix + "project.description", mavenProject.getDescription());
         }
-        antProject.setProperty((propertyPrefix + "project.version"), mavenProject.getVersion());
-        antProject.setProperty((propertyPrefix + "project.packaging"), mavenProject.getPackaging());
+        antProject.setProperty(propertyPrefix + "project.version", mavenProject.getVersion());
+        antProject.setProperty(propertyPrefix + "project.packaging", mavenProject.getPackaging());
         antProject.setProperty(
-                (propertyPrefix + "project.build.directory"),
+                propertyPrefix + "project.build.directory",
                 mavenProject.getBuild().getDirectory());
         antProject.setProperty(
-                (propertyPrefix + "project.build.outputDirectory"),
+                propertyPrefix + "project.build.outputDirectory",
                 mavenProject.getBuild().getOutputDirectory());
         antProject.setProperty(
-                (propertyPrefix + "project.build.testOutputDirectory"),
+                propertyPrefix + "project.build.testOutputDirectory",
                 mavenProject.getBuild().getTestOutputDirectory());
         antProject.setProperty(
-                (propertyPrefix + "project.build.sourceDirectory"),
+                propertyPrefix + "project.build.sourceDirectory",
                 mavenProject.getBuild().getSourceDirectory());
         antProject.setProperty(
-                (propertyPrefix + "project.build.testSourceDirectory"),
+                propertyPrefix + "project.build.testSourceDirectory",
                 mavenProject.getBuild().getTestSourceDirectory());
         antProject.setProperty(
-                (propertyPrefix + "localRepository"),
+                propertyPrefix + "localRepository",
                 getLocalRepository().getBasedir().getAbsolutePath());
         antProject.setProperty(
-                (propertyPrefix + "settings.localRepository"),
+                propertyPrefix + "settings.localRepository",
                 getLocalRepository().getBasedir().getAbsolutePath());
 
         // Add properties for dependency artifacts
