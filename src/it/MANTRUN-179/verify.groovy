@@ -20,24 +20,7 @@
 
 import java.io.File;
 
-import org.codehaus.plexus.util.FileUtils;
+File buildLog = new File( basedir, "build.log" );
+String log = buildLog.getText( 'UTF-8' );
 
-try
-{
-    File buildLog = new File( basedir, "build.log" );
-    String log = FileUtils.fileRead( buildLog );
-
-    if ( !log.contains( "[echo] From the pluginManagement" ) || 
-         !log.contains( "[echo] From the exec config" ) )
-    {
-        System.err.println( "Generated console output does not contain [echo] output: " + buildLog );
-        return false;
-    }
-}
-catch( Throwable t )
-{
-    t.printStackTrace();
-    return false;
-}
-
-return true;
+assert log.contains( "[echo] From the pluginManagement" ) && log.contains( "[echo] From the exec config" ) : "Generated console output does not contain [echo] output: " + buildLog

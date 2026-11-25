@@ -19,35 +19,13 @@
  */
 
 import java.io.*;
-import java.util.*;
-import java.util.regex.*;
 
-import org.codehaus.plexus.util.*;
+String zipFilePath = "../../local-repo/antrun-plugin/test/antrun-plugin-attach-artifact-test/1.0-SNAPSHOT/antrun-plugin-attach-artifact-test-1.0-SNAPSHOT-foo.zip";
+File installedZipFile = new File( basedir, zipFilePath );
 
-try
-{
-    String zipFilePath = "../../local-repo/antrun-plugin/test/antrun-plugin-attach-artifact-test/1.0-SNAPSHOT/antrun-plugin-attach-artifact-test-1.0-SNAPSHOT-foo.zip";
-    File installedZipFile = new File( basedir, zipFilePath );
+assert installedZipFile.exists() : "Zip file not installed: " + installedZipFile
 
-    if ( ! installedZipFile.exists() )
-    {
-        System.out.println( "Zip file not installed: " + installedZipFile );
-        return false;
-    }
+String zipWithouClassifierFilePath = "../../local-repo/antrun-plugin/test/antrun-plugin-attach-artifact-test/1.0-SNAPSHOT/antrun-plugin-attach-artifact-test-1.0-SNAPSHOT.zip";
+File installedZipWithouClassifierFile = new File( basedir, zipWithouClassifierFilePath );
 
-    String zipWithouClassifierFilePath = "../../local-repo/antrun-plugin/test/antrun-plugin-attach-artifact-test/1.0-SNAPSHOT/antrun-plugin-attach-artifact-test-1.0-SNAPSHOT.zip";
-    File installedZipWithouClassifierFile = new File( basedir, zipWithouClassifierFilePath );
-
-    if ( ! installedZipWithouClassifierFile.exists() )
-    {
-        System.out.println( "Zip file (without classifier) not installed: " + installedZipWithouClassifierFile );
-        return false;
-    }
-}
-catch( Throwable t )
-{
-    t.printStackTrace();
-    return false;
-}
-
-return true;
+assert installedZipWithouClassifierFile.exists() : "Zip file (without classifier) not installed: " + installedZipWithouClassifierFile

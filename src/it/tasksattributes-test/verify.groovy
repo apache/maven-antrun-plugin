@@ -19,32 +19,9 @@
  */
 
 import java.io.*;
-import java.util.*;
-import java.util.regex.*;
 
-import org.codehaus.plexus.util.*;
+File buildLog = new File( basedir, "build.log" );
+String log = buildLog.getText( 'UTF-8' );
 
-try
-{
-    File buildLog = new File( basedir, "build.log" );
-    String log = FileUtils.fileRead( buildLog );
-
-    if ( log.indexOf( "[echo] [ANTRUN-OUTPUT-MARKER:IF]" ) < 0 )
-    {
-        System.err.println( "Generated console output does not contain expected marker output" );
-        return false;
-    }
-
-    if ( log.indexOf( "[echo] [ANTRUN-OUTPUT-MARKER:UNLESS]" ) >= 0 )
-    {
-        System.err.println( "Generated console output contains unexpected marker output" );
-        return false;
-    }
-}
-catch( Throwable t )
-{
-    t.printStackTrace();
-    return false;
-}
-
-return true;
+assert log.indexOf( "[echo] [ANTRUN-OUTPUT-MARKER:IF]" ) >= 0 : "Generated console output does not contain expected marker output"
+assert log.indexOf( "[echo] [ANTRUN-OUTPUT-MARKER:UNLESS]" ) < 0 : "Generated console output contains unexpected marker output"

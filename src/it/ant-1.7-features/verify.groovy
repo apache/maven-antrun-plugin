@@ -19,20 +19,7 @@
  */
 
 import java.io.*;
-import org.codehaus.plexus.util.*;
 
-try
-{
-    File xmlFile = new File( basedir, "echo.xml" );
-    String xml = FileUtils.fileRead( xmlFile, "UTF-8" );
-    if ( xml.indexOf( "<test" ) < 0 )
-    {
-        throw new IllegalStateException( "Bad XML output: " + xml );
-    }
-    return true;
-}
-catch( Throwable t )
-{
-    t.printStackTrace();
-    return false;
-}
+File xmlFile = new File( basedir, "echo.xml" );
+String xml = xmlFile.getText( 'UTF-8' );
+assert xml.indexOf( "<test" ) >= 0 : "Bad XML output: " + xml
