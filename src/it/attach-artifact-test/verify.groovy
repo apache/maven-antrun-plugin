@@ -18,8 +18,6 @@
  * under the License.
  */
 
-import java.io.*
-
 String zipFilePath = "../../local-repo/antrun-plugin/test/antrun-plugin-attach-artifact-test/1.0-SNAPSHOT/antrun-plugin-attach-artifact-test-1.0-SNAPSHOT-foo.zip"
 File installedZipFile = new File(basedir, zipFilePath)
 

@@ -18,8 +18,6 @@
  * under the License.
  */
 
-import java.io.*
-
 File xmlFile = new File(basedir, "echo.xml")
 String xml = xmlFile.getText('UTF-8')
 assert xml.indexOf("<test") >= 0 : "Bad XML output: " + xml

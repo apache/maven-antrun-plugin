@@ -18,8 +18,6 @@
  * under the License.
  */
 
-import java.io.*
-
 File depsDir = new File(basedir, "target/dependencies")
 File antJar = new File(depsDir, "ant-" + scriptVarVersionAnt + ".jar")
 File junitJar = new File(depsDir, "junit-jupiter-engine-" + scriptVarVersionJunit + ".jar")
