@@ -18,9 +18,9 @@
  * under the License.
  */
 
-import java.io.File;
+import java.io.File
 
-File buildLog = new File( basedir, "build.log" );
-String log = buildLog.getText( 'UTF-8' );
+File buildLog = new File(basedir, "build.log")
+String log = buildLog.getText('UTF-8')
 
-assert log.contains( "[echo] From the pluginManagement" ) && log.contains( "[echo] From the exec config" ) : "Generated console output does not contain [echo] output: " + buildLog
+assert log.contains("[echo] From the pluginManagement") && log.contains("[echo] From the exec config") : "Generated console output does not contain [echo] output: " + buildLog
