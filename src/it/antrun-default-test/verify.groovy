@@ -18,9 +18,9 @@
  * under the License.
  */
 
-import java.io.*;
+import java.io.*
 
-File buildLog = new File( basedir, "build.log" );
-String log = buildLog.getText( 'UTF-8' );
+File buildLog = new File(basedir, "build.log")
+String log = buildLog.getText('UTF-8')
 
-assert log.indexOf( "[echo] Hello World!" ) >= 0 : "Generated console output does not contain [echo] output: " + buildLog
+assert log.indexOf("[echo] Hello World!") >= 0 : "Generated console output does not contain [echo] output: " + buildLog

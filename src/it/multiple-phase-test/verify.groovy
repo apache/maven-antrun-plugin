@@ -18,10 +18,10 @@
  * under the License.
  */
 
-import java.io.*;
+import java.io.*
 
-File phase1 = new File( basedir, "phase-1.txt" );
+File phase1 = new File(basedir, "phase-1.txt")
 assert phase1.exists() : "Could not find Ant generated file: " + phase1
 
-File phase2 = new File( basedir, "phase-2.txt" );
+File phase2 = new File( basedir, "phase-2.txt" )
 assert phase2.exists() : "Could not find Ant generated file: " + phase2

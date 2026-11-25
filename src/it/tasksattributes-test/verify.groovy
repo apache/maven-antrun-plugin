@@ -18,10 +18,10 @@
  * under the License.
  */
 
-import java.io.*;
+import java.io.*
 
-File buildLog = new File( basedir, "build.log" );
-String log = buildLog.getText( 'UTF-8' );
+File buildLog = new File(basedir, "build.log")
+String log = buildLog.getText('UTF-8')
 
-assert log.indexOf( "[echo] [ANTRUN-OUTPUT-MARKER:IF]" ) >= 0 : "Generated console output does not contain expected marker output"
+assert log.indexOf("[echo] [ANTRUN-OUTPUT-MARKER:IF]") >= 0 : "Generated console output does not contain expected marker output"
 assert log.indexOf( "[echo] [ANTRUN-OUTPUT-MARKER:UNLESS]" ) < 0 : "Generated console output contains unexpected marker output"

@@ -18,19 +18,17 @@
  * under the License.
  */
 
-import java.io.*;
+import java.io.*
 
 String[] expectedFiles = [
     "org/apache/maven/plugins/antrun/attach-artifact-test-with-prefix/1.0/attach-artifact-test-with-prefix-1.0.pom",
     "org/apache/maven/plugins/antrun/attach-artifact-test-with-prefix/1.0/attach-artifact-test-with-prefix-1.0-cl.txt"
-];
+]
 
-for ( String expectedFile : expectedFiles )
-{
-    File file = new File( localRepositoryPath, expectedFile );
-    System.out.println( "Checking for existence of " + file );
-    if ( !file.isFile() )
-    {
-        throw new Exception( "Missing file " + file );
+for (String expectedFile : expectedFiles) {
+    File file = new File(localRepositoryPath, expectedFile)
+    System.out.println("Checking for existence of " + file)
+    if (!file.isFile()) {
+        throw new Exception("Missing file " + file)
     }
 }

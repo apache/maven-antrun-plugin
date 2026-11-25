@@ -18,20 +18,18 @@
  * under the License.
  */
 
-import java.io.*;
+import java.io.*
 
 String[] expectedFiles = [
     "org/apache/maven/plugins/antrun/attach-artifact-from-ant-task/1.0/attach-artifact-from-ant-task-1.0.pom",
     "org/apache/maven/plugins/antrun/attach-artifact-from-ant-task/1.0/attach-artifact-from-ant-task-1.0-from-pom.txt",
     "org/apache/maven/plugins/antrun/attach-artifact-from-ant-task/1.0/attach-artifact-from-ant-task-1.0-from-build.txt"
-];
+]
 
-for ( String expectedFile : expectedFiles )
-{
-    File file = new File( localRepositoryPath, expectedFile );
-    System.out.println( "Checking for existence of " + file );
-    if ( !file.isFile() )
-    {
-        throw new Exception( "Missing file " + file );
+for (String expectedFile : expectedFiles) {
+    File file = new File(localRepositoryPath, expectedFile)
+    System.out.println("Checking for existence of " + file)
+    if (!file.isFile()) {
+        throw new Exception("Missing file " + file)
     }
 }

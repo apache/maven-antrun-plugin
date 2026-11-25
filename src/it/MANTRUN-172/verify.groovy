@@ -18,12 +18,12 @@
  * under the License.
  */
 
-import java.io.File;
+import java.io.File
 
-File buildLog = new File( basedir, "build.log" );
-String log = buildLog.getText( 'UTF-8' );
+File buildLog = new File(basedir, "build.log")
+String log = buildLog.getText('UTF-8')
 
-assert log.contains( "[echo] pom.xml: ptest = from commandline" ) &&
-       log.contains( "[echo] pom.xml: my.test.property = from commandline" ) &&
-       log.contains( "[echo] build.xml: ptest = from commandline" ) &&
-       log.contains( "[echo] build.xml: my.test.property = from commandline" ) : "Generated console output does not contain [echo] output: " + buildLog
+assert log.contains("[echo] pom.xml: ptest = from commandline") &&
+log.contains("[echo] pom.xml: my.test.property = from commandline") &&
+log.contains("[echo] build.xml: ptest = from commandline") &&
+log.contains("[echo] build.xml: my.test.property = from commandline") : "Generated console output does not contain [echo] output: " + buildLog
