@@ -18,8 +18,6 @@
  * under the License.
  */
 
-import java.io.*
-
 File phase1 = new File(basedir, "phase-1.txt")
 assert phase1.exists() : "Could not find Ant generated file: " + phase1
 

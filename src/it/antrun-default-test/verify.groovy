@@ -18,8 +18,6 @@
  * under the License.
  */
 
-import java.io.*
-
 File buildLog = new File(basedir, "build.log")
 String log = buildLog.getText('UTF-8')
 
