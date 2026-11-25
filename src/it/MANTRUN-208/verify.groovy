@@ -19,26 +19,8 @@
  */
 
 import java.io.*;
-import java.util.*;
-import java.util.regex.*;
 
-import org.codehaus.plexus.util.*;
+File buildLog = new File( basedir, "build.log" );
+String log = buildLog.getText( 'UTF-8' );
 
-try
-{
-    File buildLog = new File( basedir, "build.log" );
-    String log = FileUtils.fileRead( buildLog );
-
-    if ( log.indexOf( "compile classpath: |" ) < 0 || log.indexOf( "compile classpath: ||" ) >= 0 )
-    {
-        System.err.println( "Generated console output does not contain compile classpath: " + buildLog );
-        return false;
-    }
-}
-catch( Throwable t )
-{
-    t.printStackTrace();
-    return false;
-}
-
-return true;
+assert log.indexOf( "compile classpath: |" ) >= 0 && log.indexOf( "compile classpath: ||" ) < 0 : "Generated console output does not contain compile classpath: " + buildLog

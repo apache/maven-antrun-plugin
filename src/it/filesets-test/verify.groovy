@@ -19,47 +19,17 @@
  */
 
 import java.io.*;
-import java.util.*;
-import java.util.regex.*;
 
-import org.codehaus.plexus.util.*;
+File depsDir = new File( basedir, "target/dependencies" );
+File antJar = new File( depsDir, "ant-" + scriptVarVersionAnt + ".jar" );
+File junitJar = new File( depsDir, "junit-jupiter-engine-" + scriptVarVersionJunit + ".jar" );
 
-try
-{
-    File depsDir = new File( basedir, "target/dependencies" );
-    File antJar = new File( depsDir, "ant-" + scriptVarVersionAnt + ".jar" );
-    File junitJar = new File( depsDir, "junit-jupiter-engine-" + scriptVarVersionJunit + ".jar" );
+assert antJar.exists() && !antJar.isDirectory() : "Ant jar file does not exist: " + antJar
+assert junitJar.exists() && !junitJar.isDirectory() : "Junit jar file does not exist: " + junitJar
 
-    if ( ! antJar.exists() || antJar.isDirectory() )
-    {
-      System.out.println( "Ant jar file does not exist: " + antJar );
-      return false;
-    }
-    if ( ! junitJar.exists() || junitJar.isDirectory() )
-    {
-      System.out.println( "Junit jar file does not exist: " + junitJar );
-      return false;
-    }
+File deps2Dir = new File( basedir, "target/dependencies2" );
+antJar = new File( deps2Dir, "ant-" + scriptVarVersionAnt + ".jar" );
+junitJar = new File( deps2Dir, "junit-jupiter-api-" + scriptVarVersionJunit + ".jar" );
 
-    File deps2Dir = new File( basedir, "target/dependencies2" );
-    antJar = new File( deps2Dir, "ant-" + scriptVarVersionAnt + ".jar" );
-    junitJar = new File( deps2Dir, "junit-jupiter-api-" + scriptVarVersionJunit + ".jar" );
-
-    if ( ! antJar.exists() || antJar.isDirectory() )
-    {
-      System.out.println( "Ant jar file does not exist: " + antJar );
-      return false;
-    }
-    if ( ! junitJar.exists() || junitJar.isDirectory() )
-    {
-      System.out.println( "Junit jar file does not exist: " + junitJar );
-      return false;
-    }
-}
-catch( Throwable t )
-{
-    t.printStackTrace();
-    return false;
-}
-
-return true;
+assert antJar.exists() && !antJar.isDirectory() : "Ant jar file does not exist: " + antJar
+assert junitJar.exists() && !junitJar.isDirectory() : "Junit jar file does not exist: " + junitJar

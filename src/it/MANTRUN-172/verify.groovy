@@ -20,26 +20,10 @@
 
 import java.io.File;
 
-import org.codehaus.plexus.util.FileUtils;
+File buildLog = new File( basedir, "build.log" );
+String log = buildLog.getText( 'UTF-8' );
 
-try
-{
-    File buildLog = new File( basedir, "build.log" );
-    String log = FileUtils.fileRead( buildLog );
-
-    if ( !log.contains( "[echo] pom.xml: ptest = from commandline" ) || 
-         !log.contains( "[echo] pom.xml: my.test.property = from commandline" ) ||
-         !log.contains( "[echo] build.xml: ptest = from commandline" ) || 
-         !log.contains( "[echo] build.xml: my.test.property = from commandline" ) )
-    {
-        System.err.println( "Generated console output does not contain [echo] output: " + buildLog );
-        return false;
-    }
-}
-catch( Throwable t )
-{
-    t.printStackTrace();
-    return false;
-}
-
-return true;
+assert log.contains( "[echo] pom.xml: ptest = from commandline" ) &&
+       log.contains( "[echo] pom.xml: my.test.property = from commandline" ) &&
+       log.contains( "[echo] build.xml: ptest = from commandline" ) &&
+       log.contains( "[echo] build.xml: my.test.property = from commandline" ) : "Generated console output does not contain [echo] output: " + buildLog
